@@ -14,6 +14,6 @@ class HideoutSeeder extends Seeder
      */
     public function run()
     {
-        //
+        
     }
 }
