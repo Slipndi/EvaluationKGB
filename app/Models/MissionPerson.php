@@ -29,7 +29,7 @@ class MissionPerson extends Model
      *
      * @return BelongsTo
      */
-    public function missions() : BelongsTo {
+    public function smissions() : BelongsTo {
         return $this->belongsTo(Mission::class);
     }
 

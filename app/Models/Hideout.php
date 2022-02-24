@@ -30,7 +30,7 @@ class Hideout extends Model
      *
      * @return HasMany
      */
-    public function mission_hideout() : HasMany {
+    public function missions() : HasMany {
         return $this->hasMany(MissionHideout::class);
     }
 

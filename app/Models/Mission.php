@@ -54,7 +54,7 @@ class Mission extends Model
      *
      * @return BelongsToMany
      */
-    public function mission_hideouts() : BelongsToMany {
+    public function hideouts() : BelongsToMany {
         return $this->belongsToMany(MissionHideout::class);
     }
 
@@ -63,7 +63,7 @@ class Mission extends Model
      *
      * @return BelongsToMany
      */
-    public function mission_persons() : BelongsToMany {
+    public function persons() : BelongsToMany {
         return $this->belongsToMany(MissionPerson::class);
     }
 
