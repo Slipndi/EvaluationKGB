@@ -17,4 +17,6 @@ class Person extends Model
         'code_name',
         'role_id',
     ];
+
+    protected $table ='People';
 }

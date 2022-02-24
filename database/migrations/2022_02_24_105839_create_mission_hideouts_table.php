@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('persons', function (Blueprint $table) {
+        Schema::create('missions_hideouts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('country_id')->constrained();
-            $table->foreignId('role_id')->constrained();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('code_name');
-            $table->date('birthdate');
+            $table->foreignId('hideout_id')->constrained();
+            $table->foreignId('mission_id')->constrained();
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('persons');
+        Schema::dropIfExists('missions_hideouts');
     }
 };

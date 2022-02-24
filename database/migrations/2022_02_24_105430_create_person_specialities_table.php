@@ -13,17 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('missions', function (Blueprint $table) {
+        Schema::create('persons_specialities', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->string('code_name');
-            $table->foreignId('country_id')->constrained();
-            $table->string('type');
-            $table->foreignId('statut_id')->constrained();
+            $table->unsignedBigInteger('person_id');
+            $table->foreign('person_id')
+            ->references('id')
+            ->on('persons');
             $table->foreignId('speciality_id')->constrained();
-            $table->date('start_date');
-            $table->date('end_date');
             $table->timestamps();
         });
     }
@@ -35,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('missions');
+        Schema::dropIfExists('person_specialities');
     }
 };
