@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Speciality;
 use Illuminate\Database\Seeder;
 
 class SpecialitySeeder extends Seeder
@@ -14,6 +14,15 @@ class SpecialitySeeder extends Seeder
      */
     public function run()
     {
-        //
+        $specialities = collect([
+            ['title' => 'Conduite'],
+            ['title' => 'Pilotage d\'hélicoptère'],
+            ['title' => 'Armes à feux'],
+            ['title' => 'Photographie'],
+            ['title' => 'Polyglotte'],
+        ]);
+        $specialities->each(
+            fn(array $speciality) : void => Speciality::create($speciality)
+        );
     }
 }
