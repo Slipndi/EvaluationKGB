@@ -9,15 +9,18 @@ use Illuminate\Http\Request;
 
 class MissionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected const ON_DUTY_STATUT_ID = 2;
+   /**
+    * Permet d'afficher la liste des missions en cours
+    *
+    * @return View
+    */
     public function index() : View {
-        $missions = Mission::latest()->paginate(5);
+        $missions = Mission::latest()
+            ->where('statut_id', static::ON_DUTY_STATUT_ID)
+            ->paginate(6);
         return view('missions.index', compact('missions'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+            ->with('i', (request()->input('page', 1) - 1) * 6);
     }
 
     /**

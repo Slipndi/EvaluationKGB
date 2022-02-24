@@ -9,7 +9,7 @@
 </head>
 <body class="h-full">
     <x-navigation.panel />
-    <main>
+    <main class='container px-2'>
         @yield('content')
     </main>
     <footer></footer>
