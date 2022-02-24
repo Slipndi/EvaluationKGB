@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Mission;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+
+class MissionController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index() : View {
+        $missions = Mission::latest()->paginate(5);
+        return view('missions.index', compact('missions'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+    /**
+     * Création d'une nouvelle mission
+     *
+     */
+    public function create() : View {
+        return view('missions.create');
+    }
+
+    /**
+     *  Vérification et insertion en base de donnée
+     */
+    public function store(Request $request) : RedirectResponse
+    {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
+        Mission::create($request->all());
+        return redirect()
+            ->route('missions.index')
+            ->with('success','La mission a bien été crée');
+    }
+
+    /**
+     * Affiche la mission sélectionnée en détail
+     *
+     */
+    public function show(Mission $mission) : View {
+        return view('missions.show', compact('mission'));
+    }
+
+    /**
+     * Affichage du formulaire pour l'édition
+     */
+    public function edit(Mission $mission) : View {
+        return view('missions.edit', compact('mission'));
+    }
+
+    /**
+     * Insertion en base de donnée
+     */
+    public function update(Request $request, Mission $mission) : RedirectResponse {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
+        $mission->update($request->all());
+        return redirect()
+            ->route('missions.index')
+            ->with('success','La mission a bien été mise à jour');
+    }
+
+    /**
+     * Suppression de l'enregistrement dans la base de donnée
+     */
+    public function destroy(Mission $mission) : RedirectResponse {
+        $mission->delete();
+        return redirect()->route('missions.index')
+            ->with('success','La mission a bien été supprimée');
+    }
+}
