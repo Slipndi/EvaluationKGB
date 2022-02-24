@@ -13,6 +13,7 @@ use Illuminate\Support\Arr;
  */
 class MissionFactory extends Factory
 {
+    protected const ON_DUTY_STATUT_ID = 2;
     /**
      * Define the model's default state.
      *
@@ -21,14 +22,17 @@ class MissionFactory extends Factory
     public function definition()
     {
         return [
-            'title'=>$this->faker->company . ' : ' . $this->faker->sentence,
+            'title'=>$this->faker->company,
             'description'=>$this->faker->paragraph,
             'code_name'=>$this->faker->macAddress,
             'country_id' => Country::inRandomOrder()->first()->id,
             'type' => Arr::random(
                 ['Surveillance', 'Espionnage', 'Assassinat', 'Infiltration']
             ),
-            'statut_id' => Statut::inRandomOrder()->first()->id,
+            'statut_id' => Statut::where('id', '!=', static::ON_DUTY_STATUT_ID)
+                ->inRandomOrder()
+                ->first()
+                ->id,
             'speciality_id' => Speciality::inRandomOrder()->first()->id,
             'start_date' => $this->faker->dateTimeThisYear(),
             'end_date' => $this->faker->dateTimeThisMonth()

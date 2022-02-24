@@ -17,7 +17,7 @@ class MissionController extends Controller
     */
     public function index() : View {
         $missions = Mission::latest()
-            ->where('statut_id', static::ON_DUTY_STATUT_ID)
+            //->where('statut_id', static::ON_DUTY_STATUT_ID)
             ->paginate(6);
         return view('missions.index', compact('missions'))
             ->with('i', (request()->input('page', 1) - 1) * 6);

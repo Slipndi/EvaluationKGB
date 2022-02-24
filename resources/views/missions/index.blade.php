@@ -12,7 +12,7 @@
     </div>
     <div class='grid xl:grid-cols-3 md:grid-cols-2 sm:grid-col-1 gap-2'>
         @foreach($missions as $mission)
-            <x-cards :mission="$mission"></x-cards>
+            <x-cards.index :mission="$mission"></x-cards>
         @endforeach
     </div>
     {!! $missions->links() !!}
