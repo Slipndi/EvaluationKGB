@@ -22,7 +22,7 @@ class SpecialitySeeder extends Seeder
             ['title' => 'Polyglotte'],
         ]);
         $specialities->each(
-            fn(array $speciality) : void => Speciality::create($speciality)
+            fn(array $speciality) => Speciality::create($speciality)
         );
     }
 }

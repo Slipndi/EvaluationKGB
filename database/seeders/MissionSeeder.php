@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Mission;
 use Illuminate\Database\Seeder;
 
-class MissionHideoutSeeder extends Seeder
+class MissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class MissionHideoutSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Mission::factory()->count(500)->create();
     }
 }

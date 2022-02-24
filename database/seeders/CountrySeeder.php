@@ -265,6 +265,6 @@ class CountrySeeder extends Seeder
             ['name' => 'Zambia', 'code' => 'ZM'],
             ['name' => 'Zimbabwe', 'code' => 'ZW'],
         ]);
-        $countries->each(fn(array $country, $key) => Country::create($country));
+        $countries->each(fn(array $country) => Country::create($country));
     }
 }

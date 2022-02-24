@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\{Country, Role};
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,12 @@ class PersonFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "country_id" => Country::inRandomOrder()->first()->id,
+            "first_name" => $this->faker->firstName(),
+            "last_name" => $this->faker->lastName(),
+            "birthdate" => $this->faker->dateTimeThisCentury(),
+            "code_name" => $this->faker->userName(),
+            "role_id" => Role::inRandomOrder()->first()->id
         ];
     }
 }
