@@ -52,16 +52,16 @@ class Mission extends Model
     /**
      * Une mission peut avoir zéro ou plusieurs planques
      *
-     * @return BelongsToMany
+     * @return hasMany
      */
-    public function missionHideouts() : BelongsToMany {
-        return $this->belongsToMany(MissionHideout::class);
+    public function missionHideouts() : HasMany {
+        return $this->hasMany(MissionHideout::class);
     }
 
     /**
      * Une mission a plusieurs entrées dans la table missionPersonnes
      *
-     * @return BelongsToMany
+     * @return hasManys
      */
     public function missionsPersons() : HasMany {
         return $this->hasMany(MissionPerson::class);
@@ -70,19 +70,19 @@ class Mission extends Model
     /**
      * Une mission a plusieurs personnes
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function persons() : HasMany {
-        return $this->hasMany(Person::class);
+    public function persons() : BelongsToMany {
+        return $this->belongsToMany(Person::class);
     }
     
     /**
      * Une mission peut avoir plusieurs planque
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function hideouts() : HasMany {
-        return $this->hasMany(Hideout::class);
+    public function hideouts() : BelongsToMany {
+        return $this->belongsToMany(Hideout::class);
     }
 
 
