@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Hideout>
@@ -17,7 +19,9 @@ class HideoutFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'address' => $this->faker->address(),
+            'country_id' => Country::inRandomOrder()->first()->id,
+            'type' => Arr::random(['Appartement', 'Maison', 'Garage'])
         ];
     }
 }

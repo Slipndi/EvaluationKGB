@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Hideout;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,6 @@ class HideoutSeeder extends Seeder
      */
     public function run()
     {
-        
+        Hideout::factory()->count(500)->create();
     }
 }
