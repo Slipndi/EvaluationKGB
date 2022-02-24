@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\{ BelongsTo, BelongsToMany};
+use Illuminate\Database\Eloquent\Relations\{ BelongsTo, BelongsToMany, HasMany};
 
 class Mission extends Model
 {
@@ -54,19 +54,36 @@ class Mission extends Model
      *
      * @return BelongsToMany
      */
-    public function hideouts() : BelongsToMany {
+    public function missionHideouts() : BelongsToMany {
         return $this->belongsToMany(MissionHideout::class);
     }
 
     /**
-     * Une mission doit avoir plusieurs personnes
+     * Une mission a plusieurs entrées dans la table missionPersonnes
      *
      * @return BelongsToMany
      */
-    public function persons() : BelongsToMany {
-        return $this->belongsToMany(MissionPerson::class);
+    public function missionsPersons() : HasMany {
+        return $this->hasMany(MissionPerson::class);
     }
 
+    /**
+     * Une mission a plusieurs personnes
+     *
+     * @return HasMany
+     */
+    public function persons() : HasMany {
+        return $this->hasMany(Person::class);
+    }
+    
+    /**
+     * Une mission peut avoir plusieurs planque
+     *
+     * @return HasMany
+     */
+    public function hideouts() : HasMany {
+        return $this->hasMany(Hideout::class);
+    }
 
 
 

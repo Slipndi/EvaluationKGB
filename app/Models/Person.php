@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany, HasMany};
 
 class Person extends Model
 {
@@ -37,6 +37,42 @@ class Person extends Model
      */
     public function role() : BelongsTo {
         return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Plusieurs personnes, peuvent avoir une ou plusieurs  missions
+     *
+     * @return HasMany
+     */
+    public function missionsPersons() : HasMany {
+        return $this->hasMany(MissionPerson::class);
+    }
+
+    /**
+     * Une personne peut avoir plusieurs missions
+     *
+     * @return BelongsToMany
+     */
+    public function missions() : BelongsToMany {
+        return $this->belongsToMany(Mission::class);
+    }
+
+    /**
+     * Plusieurs personnes, peuvent avoir une ou plusieurs  spécialitées
+     *
+     * @return HasMany
+     */
+    public function personSpecialities() : HasMany {
+        return $this->hasMany(PersonSpeciality::class);
+    }
+
+    /**
+     * Une personne peut avoir plusieurs Spécialités
+     *
+     * @return BelongsToMany
+     */
+    public function specialities() : BelongsToMany {
+        return $this->belongsToMany(Speciality::class);
     }
 
     

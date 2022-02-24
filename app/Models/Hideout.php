@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany, HasMany};
 
 class Hideout extends Model
 {
@@ -17,7 +17,7 @@ class Hideout extends Model
     ];
 
     /**
-     * Une planque appartient à 1 pays
+     * Une planque appartient à un pays, mais un pays peut avoir plusieurs planques
      *
      * @return BelongsTo
      */
@@ -26,12 +26,19 @@ class Hideout extends Model
     }
 
     /**
-     * Une planque peut être utilisée sur plusieurs missions
+     * Une mission peut avoir plusieurs planques
      *
      * @return HasMany
      */
-    public function missions() : HasMany {
+    public function missionHideouts() : HasMany {
         return $this->hasMany(MissionHideout::class);
+    }
+    
+    /**
+     * une plaqune peut avoir plusieurs mission
+     */
+    public function missions() : BelongsToMany {
+        return $this->belongsToMany(Mission::class);
     }
 
 }
