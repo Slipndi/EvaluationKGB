@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\MissionController;
+use App\Http\Controllers\{initiateMission, MissionController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,5 +13,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Accès utilisateurs standard
 Route::get('/', fn() => view('index'));
+
+//Accès Administrateur
+Route::get('/initiate-mission',fn() => (new InitiateMission)->index());
+//Crud Mission 
 Route::resource('missions', MissionController::class);

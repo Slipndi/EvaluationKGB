@@ -22,6 +22,7 @@
                             <x-navigation.link href="/missions">Missions</x-menu-link>
                             <x-navigation.link href="/persons">Personnes</x-menu-link>
                             <x-navigation.link href="/hideouts">Planques</x-menu-link>
+                            <x-navigation.link href="/initiate-mission">Initier une mission</x-menu-link>
                         </div>
                     </div>
                 </div>
