@@ -2162,7 +2162,72 @@ module.exports = {
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Action déclenché quand l'utilisateur veut configurer une mission
+
+
+getValue = function getValue() {
+  var display = document.getElementById('missionDisplay');
+  var mission = JSON.parse(document.getElementById('missionId').value);
+  var country = getCountry(mission.country_id);
+  country.then(function (data) {
+    console.log(data);
+    createImage(data.code.toLowerCase());
+    insertCountryData(data);
+  });
+  insertMissionData(mission);
+  display.hidden = false;
+}; //Récupération des données du pays
+
+
+getCountry = function getCountry(id) {
+  return fetch("/country/json/".concat(id), {
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
+      "X-CSRF-TOKEN": "{{ csrf_token() }}"
+    },
+    method: "get"
+  }).then(function (response) {
+    return response.json();
+  });
+}; // Création du lien de l'image dynamiquement en fonction du choix de la mission
+
+
+createImage = function createImage(countryCode) {
+  var parent = document.getElementById('picture');
+  var img = document.createElement('img'); // Je vide l'élement parent
+
+  parent.innerHTML = ''; // je récupère l'image du drapeau
+
+  img.src = "https://flagcdn.com/".concat(countryCode, ".svg"); // Je met le style sur mon image
+
+  img.classList.add("w-20", "h-20", "object-cover", "rounded-full", "border-2", "border-indigo-500"); // Je l'envoi dans le dom
+
+  parent.appendChild(img);
+}; // Insertion des informations lié au pays dans le tableau
+
+
+insertCountryData = function insertCountryData(countryData) {
+  var name = countryData.name;
+  var parent = document.getElementById('countryName');
+  parent.innerHTML = name;
+}; // Insertion des données de missions dans le dom
+
+
+insertMissionData = function insertMissionData(missionData) {
+  console.log(missionData);
+  var name = missionData.title;
+  var description = missionData.description;
+  var code = missionData.code_name;
+  var type = missionData.type;
+  var title = document.getElementById('missionName');
+  var codeName = document.getElementById('codeName');
+  var missionType = document.getElementById('missionType');
+  title.innerHTML = name;
+  codeName.innerHTML = code;
+  missionType.innerHTML = type;
+};
 
 /***/ }),
 

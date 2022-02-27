@@ -85,4 +85,5 @@ class MissionController extends Controller
         return redirect()->route('missions.index')
             ->with('success','La mission a bien été supprimée');
     }
+
 }
