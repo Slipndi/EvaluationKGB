@@ -16,7 +16,7 @@ class RoleSeeder extends Seeder
     {
         $roles =collect([
             ['title' => 'agent'],
-            ['title' => 'cible'],
+            ['title' => 'target'],
             ['title' => 'contact']
         ]);
         $roles->each(fn(array $role)=> Role::create($role));
