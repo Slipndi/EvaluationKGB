@@ -14,6 +14,7 @@ getValue = function(){
     insertMissionData(mission);
     insertTargets();
     insertInformer();
+    insertAgent(mission);
 
 
     display.hidden = false;
@@ -92,6 +93,24 @@ insertInformer = function () {
     // Pour toutes les cibles disponibles, je crée une checkbox
     contactAvailable.forEach(
             (contact) => generateCheckboxes(contact, 'contacts', contactParent)
+        );
+    });
+}
+insertAgent = function (mission) {
+    let specialityId = mission.speciality_id;
+    let agents = agents == null ? getUser(1, specialityId) : agents;
+    let agentParent = document.getElementById('agentParent');
+    agentParent.innerHTML = '';
+    let titleAgent = document.getElementById('titleAgent');
+    // Je récupère la liste des cibles disponible dans le pays
+    agents.then((agentsAvailable) => {
+    // Si aucune cible disponible j'informe l'administrateur
+    agentsAvailable.length == 0 
+            ? titleAgent.innerHTML = 'No agent available.'
+            : titleAgent.innerHTML = 'Select your agent(s)';
+    // Pour toutes les cibles disponibles, je crée une checkbox
+    agentsAvailable.forEach(
+            (agent) => generateCheckboxes(agent, 'agents', agentParent)
         );
     });
 }

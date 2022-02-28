@@ -2176,6 +2176,7 @@ getValue = function getValue() {
   insertMissionData(mission);
   insertTargets();
   insertInformer();
+  insertAgent(mission);
   display.hidden = false;
 }; // Création du lien de l'image dynamiquement en fonction du choix de la mission
 
@@ -2243,6 +2244,23 @@ insertInformer = function insertInformer() {
 
     contactAvailable.forEach(function (contact) {
       return generateCheckboxes(contact, 'contacts', contactParent);
+    });
+  });
+};
+
+insertAgent = function insertAgent(mission) {
+  var specialityId = mission.speciality_id;
+  var agents = agents == null ? getUser(1, specialityId) : agents;
+  var agentParent = document.getElementById('agentParent');
+  agentParent.innerHTML = '';
+  var titleAgent = document.getElementById('titleAgent'); // Je récupère la liste des cibles disponible dans le pays
+
+  agents.then(function (agentsAvailable) {
+    // Si aucune cible disponible j'informe l'administrateur
+    agentsAvailable.length == 0 ? titleAgent.innerHTML = 'No agent available.' : titleAgent.innerHTML = 'Select your agent(s)'; // Pour toutes les cibles disponibles, je crée une checkbox
+
+    agentsAvailable.forEach(function (agent) {
+      return generateCheckboxes(agent, 'agents', agentParent);
     });
   });
 }; //Récupération des données du pays

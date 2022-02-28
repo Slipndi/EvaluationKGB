@@ -34,7 +34,7 @@ class Speciality extends Model
      *
      * @return HasMany
      */
-    public function personSpecialities() : HasMany {
+    public function personsSpecialities() : HasMany {
         return $this->hasMany(PersonSpeciality::class);
     }
 

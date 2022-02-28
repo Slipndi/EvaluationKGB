@@ -91,6 +91,17 @@ class PersonController extends Controller
         int $countryId, 
         int $specialityId = null
     ) : JsonResponse {
+        if($roleId == 1 ) {
+            return Response()
+            ->json(
+                Person::join('person_speciality', 'person_speciality.person_id','persons.id')
+                ->join('specialities', 'specialities.id', 'persons.id')
+                ->where('country_id', '!=', $countryId)
+                ->where('role_id', $roleId)
+                ->where('specialities.id', $specialityId)
+                ->get()
+            );
+            }
         return Response()
             ->json(
                 Person::where('country_id', $countryId)
@@ -99,3 +110,4 @@ class PersonController extends Controller
             );
     }
 }
+

@@ -11,25 +11,17 @@ class PersonSpeciality extends Model
     use HasFactory;
 
     protected $fillable = [
-        'mission_id',
+        'speciality_id',
         'person_id'
     ];
 
-    /**
-     * Crée le liens entre HIDEOUTS et MISSIONS
-     *
-     * @return BelongsTo
-     */
+    protected $table = 'person_speciality';
+
     public function person() : BelongsTo {
         return $this->belongsTo(Person::class);
     }
-    
-    /**
-     * Crée le liens entre HIDEOUTS et MISSIONS
-     *
-     * @return BelongsTo
-     */
-    public function mission() : BelongsTo {
-        return $this->belongsTo(Mission::class);
+
+    public function speciality() : BelongsTo {
+        return $this->belongsTo(Speciality::class);
     }
 }

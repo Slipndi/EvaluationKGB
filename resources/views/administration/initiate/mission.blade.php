@@ -29,7 +29,7 @@
                     <fieldset>
                         <div class='flex w-100 my-3'>
                             <h3 id='titleTarget'>Select your target</h3> 
-                            <x-buttons.add href='/persons/create' id='addTarget' title='create target'/>
+                            <x-buttons.add href='/persons/create'  title='create target'/>
                         </div>       
                         <div id="target"></div>         
                     </fieldset>
@@ -39,9 +39,19 @@
                     <fieldset>
                         <div class='flex w-100 my-3'>
                             <h3 id='titleContact'>Select your informer(s)</h3> 
-                            <x-buttons.add href='/persons/create' id='addContact' title='create contact'/>
+                            <x-buttons.add href='/persons/create' title='create contact'/>
                         </div>       
                         <div id="contactParent"></div>         
+                    </fieldset>
+                </div>
+                <x-hr />
+                <div>
+                    <fieldset>
+                        <div class='flex w-100 my-3'>
+                            <h3 id='titleAgent'>Select your agent(s)</h3> 
+                            <x-buttons.add href='/persons/create' title='create agent'/>
+                        </div>       
+                        <div id="agentParent"></div>         
                     </fieldset>
                 </div>
             </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\{
     MissionController,
     PersonController
 };
+use App\Models\Person;
 use Illuminate\Support\Facades\Route;
 
 /*
