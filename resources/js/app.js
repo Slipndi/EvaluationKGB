@@ -13,6 +13,7 @@ getValue = function(){
 
     insertMissionData(mission);
     insertTargets();
+    insertInformer();
 
 
     display.hidden = false;
@@ -78,19 +79,19 @@ insertTargets = function () {
 }
 
 insertInformer = function () {
-    let informers = informers == null ? getUser(3) : informers;
-    let informerParent = document.getElementById('informer');
-    informerParent.innerHTML = '';
-    let informerTitle = document.getElementById('titleInformer');
+    let contacts = contacts == null ? getUser(3) : contacts;
+    let contactParent = document.getElementById('contactParent');
+    contactParent.innerHTML = '';
+    let contactTitle = document.getElementById('titleContact');
     // Je récupère la liste des cibles disponible dans le pays
-    informers.then((informerAvailable) => {
+    contacts.then((contactAvailable) => {
     // Si aucune cible disponible j'informe l'administrateur
-    informerAvailable.length == 0 
-            ? informerTitle.innerHTML = 'No contact available.'
-            : informerTitle.innerHTML = 'Select your contact(s)';
+    contactAvailable.length == 0 
+            ? contactTitle.innerHTML = 'No contact available.'
+            : contactTitle.innerHTML = 'Select your contact(s)';
     // Pour toutes les cibles disponibles, je crée une checkbox
-        targetAvailable.forEach(
-            (contact) => generateCheckboxes(contact, 'contacts', informerParent)
+    contactAvailable.forEach(
+            (contact) => generateCheckboxes(contact, 'contacts', contactParent)
         );
     });
 }
@@ -131,10 +132,15 @@ getUser = function (roleId, speciality = null) {
         .then((data) => data);
 };
 
+// Permet de générer les checkBoxes en donnant, un objet Person
+// un Nom d'input pour le traitement du formulaire
+// et le parent qui va accueillir les elements du dom
 generateCheckboxes = function (person, inputName, parent) {
+    //Définition des élements du dom crée
     let div = document.createElement('div');
     let input = document.createElement('input');
     let label = document.createElement('label');
+    // On les génère en fonction des données
     input.name = inputName
     input.type = 'checkbox';
     input.value = person.id;
@@ -146,5 +152,6 @@ generateCheckboxes = function (person, inputName, parent) {
     div.classList.add('flex', 'items-center');
     div.appendChild(input);
     div.appendChild(label);
+    // on injecte l'ensemble dans le dom
     parent.append(div);
 }

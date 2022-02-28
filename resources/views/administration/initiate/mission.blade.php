@@ -38,10 +38,10 @@
                 <div>
                     <fieldset>
                         <div class='flex w-100 my-3'>
-                            <h3 id='titleInformer'>Select your informer(s)</h3> 
-                            <x-buttons.add href='/persons/create' id='addInformer' title='create Informer'/>
+                            <h3 id='titleContact'>Select your informer(s)</h3> 
+                            <x-buttons.add href='/persons/create' id='addContact' title='create contact'/>
                         </div>       
-                        <div id="informer"></div>         
+                        <div id="contactParent"></div>         
                     </fieldset>
                 </div>
             </div>

@@ -2175,6 +2175,7 @@ getValue = function getValue() {
   });
   insertMissionData(mission);
   insertTargets();
+  insertInformer();
   display.hidden = false;
 }; // Création du lien de l'image dynamiquement en fonction du choix de la mission
 
@@ -2231,17 +2232,17 @@ insertTargets = function insertTargets() {
 };
 
 insertInformer = function insertInformer() {
-  var informers = informers == null ? getUser(3) : informers;
-  var informerParent = document.getElementById('informer');
-  informerParent.innerHTML = '';
-  var informerTitle = document.getElementById('titleInformer'); // Je récupère la liste des cibles disponible dans le pays
+  var contacts = contacts == null ? getUser(3) : contacts;
+  var contactParent = document.getElementById('contactParent');
+  contactParent.innerHTML = '';
+  var contactTitle = document.getElementById('titleContact'); // Je récupère la liste des cibles disponible dans le pays
 
-  informers.then(function (informerAvailable) {
+  contacts.then(function (contactAvailable) {
     // Si aucune cible disponible j'informe l'administrateur
-    informerAvailable.length == 0 ? informerTitle.innerHTML = 'No contact available.' : informerTitle.innerHTML = 'Select your contact(s)'; // Pour toutes les cibles disponibles, je crée une checkbox
+    contactAvailable.length == 0 ? contactTitle.innerHTML = 'No contact available.' : contactTitle.innerHTML = 'Select your contact(s)'; // Pour toutes les cibles disponibles, je crée une checkbox
 
-    targetAvailable.forEach(function (contact) {
-      return generateCheckboxes(contact, 'contacts', informerParent);
+    contactAvailable.forEach(function (contact) {
+      return generateCheckboxes(contact, 'contacts', contactParent);
     });
   });
 }; //Récupération des données du pays
@@ -2281,12 +2282,17 @@ getUser = function getUser(roleId) {
   }).then(function (data) {
     return data;
   });
-};
+}; // Permet de générer les checkBoxes en donnant, un objet Person
+// un Nom d'input pour le traitement du formulaire
+// et le parent qui va accueillir les elements du dom
+
 
 generateCheckboxes = function generateCheckboxes(person, inputName, parent) {
+  //Définition des élements du dom crée
   var div = document.createElement('div');
   var input = document.createElement('input');
-  var label = document.createElement('label');
+  var label = document.createElement('label'); // On les génère en fonction des données
+
   input.name = inputName;
   input.type = 'checkbox';
   input.value = person.id;
@@ -2297,7 +2303,8 @@ generateCheckboxes = function generateCheckboxes(person, inputName, parent) {
   label.innerHTML = person.code_name;
   div.classList.add('flex', 'items-center');
   div.appendChild(input);
-  div.appendChild(label);
+  div.appendChild(label); // on injecte l'ensemble dans le dom
+
   parent.append(div);
 };
 
