@@ -87,11 +87,10 @@ class PersonController extends Controller
 
     public function getJson(
         Request $request, 
-        int $countryId, 
         int $roleId, 
+        int $countryId, 
         int $specialityId = null
     ) : JsonResponse {
-        print($roleId .' '.$specialityId);
         return Response()
             ->json(
                 Person::where('country_id', $countryId)

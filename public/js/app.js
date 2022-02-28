@@ -2174,22 +2174,8 @@ getValue = function getValue() {
     insertCountryData(data);
   });
   insertMissionData(mission);
+  insertTargets();
   display.hidden = false;
-}; //Récupération des données du pays
-
-
-getCountry = function getCountry(id) {
-  return fetch("/country/json/".concat(id), {
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "X-Requested-With": "XMLHttpRequest",
-      "X-CSRF-TOKEN": "{{ csrf_token() }}"
-    },
-    method: "get"
-  }).then(function (response) {
-    return response.json();
-  });
 }; // Création du lien de l'image dynamiquement en fonction du choix de la mission
 
 
@@ -2226,14 +2212,55 @@ insertMissionData = function insertMissionData(missionData) {
   codeName.innerHTML = code;
   missionType.innerHTML = type;
   missionDescription.innerHTML = description;
-}; // Gestion de création de cible au click 
+};
 
-
-document.getElementById('addTarget').addEventListener('click', function (event) {
-  event.preventDefault();
-  var parent = document.getElementById('target');
+insertTargets = function insertTargets() {
   var targets = targets == null ? getUser(2) : targets;
-}); //Récupération des données du pays
+  var targetParent = document.getElementById('target');
+  targetParent.innerHTML = '';
+  var targetTitle = document.getElementById('titleTarget'); // Je récupère la liste des cibles disponible dans le pays
+
+  targets.then(function (targetAvailable) {
+    // Si aucune cible disponible j'informe l'administrateur
+    targetAvailable.length == 0 ? targetTitle.innerHTML = 'No target available.' : targetTitle.innerHTML = 'Select your target(s)'; // Pour toutes les cibles disponibles, je crée une checkbox
+
+    targetAvailable.forEach(function (target) {
+      return generateCheckboxes(target, 'targets', targetParent);
+    });
+  });
+};
+
+insertInformer = function insertInformer() {
+  var informers = informers == null ? getUser(3) : informers;
+  var informerParent = document.getElementById('informer');
+  informerParent.innerHTML = '';
+  var informerTitle = document.getElementById('titleInformer'); // Je récupère la liste des cibles disponible dans le pays
+
+  informers.then(function (informerAvailable) {
+    // Si aucune cible disponible j'informe l'administrateur
+    informerAvailable.length == 0 ? informerTitle.innerHTML = 'No contact available.' : informerTitle.innerHTML = 'Select your contact(s)'; // Pour toutes les cibles disponibles, je crée une checkbox
+
+    targetAvailable.forEach(function (contact) {
+      return generateCheckboxes(contact, 'contacts', informerParent);
+    });
+  });
+}; //Récupération des données du pays
+
+
+getCountry = function getCountry(id) {
+  return fetch("/country/json/".concat(id), {
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
+      "X-CSRF-TOKEN": "{{ csrf_token() }}"
+    },
+    method: "get"
+  }).then(function (response) {
+    return response.json();
+  });
+}; //Récupération des données du pays
+
 
 getUser = function getUser(roleId) {
   var speciality = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
@@ -2252,8 +2279,26 @@ getUser = function getUser(roleId) {
   }).then(function (response) {
     return response.json();
   }).then(function (data) {
-    return console.log(data);
+    return data;
   });
+};
+
+generateCheckboxes = function generateCheckboxes(person, inputName, parent) {
+  var div = document.createElement('div');
+  var input = document.createElement('input');
+  var label = document.createElement('label');
+  input.name = inputName;
+  input.type = 'checkbox';
+  input.value = person.id;
+  input.id = person.id;
+  input.required = true;
+  label.setAttribute("for", person.id);
+  label.classList.add('ml-2', 'inline-block');
+  label.innerHTML = person.code_name;
+  div.classList.add('flex', 'items-center');
+  div.appendChild(input);
+  div.appendChild(label);
+  parent.append(div);
 };
 
 /***/ }),

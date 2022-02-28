@@ -10,25 +10,16 @@ getValue = function(){
         createImage(data.code.toLowerCase());
         insertCountryData(data);
     });
-    
+
     insertMissionData(mission);
+    insertTargets();
+
+
     display.hidden = false;
-
 };
 
-//Récupération des données du pays
-getCountry  = function (id) {
-    return fetch(`/country/json/${id}`, {
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "X-Requested-With": "XMLHttpRequest",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        method: "get",
-    })
-    .then((response) => response.json())
-};
+
+
 
 // Création du lien de l'image dynamiquement en fonction du choix de la mission
 createImage = function (countryCode) {
@@ -68,18 +59,56 @@ insertMissionData = function (missionData) {
     missionDescription.innerHTML = description;
 }
 
+insertTargets = function () {
+    let targets = targets == null ? getUser(2) : targets;
+    let targetParent = document.getElementById('target');
+    targetParent.innerHTML = '';
+    let targetTitle = document.getElementById('titleTarget');
+    // Je récupère la liste des cibles disponible dans le pays
+    targets.then((targetAvailable) => {
+    // Si aucune cible disponible j'informe l'administrateur
+        targetAvailable.length == 0 
+            ? targetTitle.innerHTML = 'No target available.'
+            : targetTitle.innerHTML = 'Select your target(s)';
+    // Pour toutes les cibles disponibles, je crée une checkbox
+        targetAvailable.forEach(
+            (target) => generateCheckboxes(target, 'targets', targetParent)
+        );
+    });
+}
 
-// Gestion de création de cible au click 
+insertInformer = function () {
+    let informers = informers == null ? getUser(3) : informers;
+    let informerParent = document.getElementById('informer');
+    informerParent.innerHTML = '';
+    let informerTitle = document.getElementById('titleInformer');
+    // Je récupère la liste des cibles disponible dans le pays
+    informers.then((informerAvailable) => {
+    // Si aucune cible disponible j'informe l'administrateur
+    informerAvailable.length == 0 
+            ? informerTitle.innerHTML = 'No contact available.'
+            : informerTitle.innerHTML = 'Select your contact(s)';
+    // Pour toutes les cibles disponibles, je crée une checkbox
+        targetAvailable.forEach(
+            (contact) => generateCheckboxes(contact, 'contacts', informerParent)
+        );
+    });
+}
 
-document.getElementById('addTarget')
-    .addEventListener('click',
-        (event) => {
-            event.preventDefault();
-            let parent = document.getElementById('target');
-            let targets = targets == null ? getUser(2) : targets; 
-        }
-    );
 
+//Récupération des données du pays
+getCountry  = function (id) {
+    return fetch(`/country/json/${id}`, {
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        method: "get",
+    })
+    .then((response) => response.json())
+};
     //Récupération des données du pays
 getUser = function (roleId, speciality = null) {
     let mission = JSON.parse(document.getElementById('missionId').value);
@@ -99,5 +128,23 @@ getUser = function (roleId, speciality = null) {
         method: "get",
     })
         .then((response) => response.json())
-        .then((data) => console.log(data));
+        .then((data) => data);
 };
+
+generateCheckboxes = function (person, inputName, parent) {
+    let div = document.createElement('div');
+    let input = document.createElement('input');
+    let label = document.createElement('label');
+    input.name = inputName
+    input.type = 'checkbox';
+    input.value = person.id;
+    input.id = person.id;
+    input.required = true;
+    label.setAttribute("for", person.id);
+    label.classList.add('ml-2', 'inline-block');
+    label.innerHTML = person.code_name;
+    div.classList.add('flex', 'items-center');
+    div.appendChild(input);
+    div.appendChild(label);
+    parent.append(div);
+}
