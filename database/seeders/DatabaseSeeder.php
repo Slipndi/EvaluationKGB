@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PersonSpeciality;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
             StatutSeeder::class,
             MissionSeeder::class,
             PersonSeeder::class,
+            PersonSpecialitySeeder::class
         ]);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Person;
+use App\Models\Speciality;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,8 @@ class PersonSpecialityFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'person_id' => Person::where('role_id', 1)->inRandomOrder()->first(),
+            'speciality_id' => Speciality::inRandomOrder()->first()
         ];
     }
 }

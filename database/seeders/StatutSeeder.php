@@ -15,10 +15,10 @@ class StatutSeeder extends Seeder
     public function run()
     {
         $status =collect([
-            ['title' => 'en préparation'],
-            ['title' => 'en cours'],
-            ['title' => 'terminé'],
-            ['title' => 'echec'],
+            ['title' => 'available'],
+            ['title' => 'in progress'],
+            ['title' => 'finish'],
+            ['title' => 'failed'],
         ]);
         $status->each(fn(array $statut)=> Statut::create($statut));
     }
