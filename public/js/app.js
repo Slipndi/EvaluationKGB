@@ -2170,7 +2170,6 @@ getValue = function getValue() {
   var mission = JSON.parse(document.getElementById('missionId').value);
   var country = getCountry(mission.country_id);
   country.then(function (data) {
-    console.log(data);
     createImage(data.code.toLowerCase());
     insertCountryData(data);
   });
@@ -2209,14 +2208,12 @@ createImage = function createImage(countryCode) {
 
 
 insertCountryData = function insertCountryData(countryData) {
-  var name = countryData.name;
   var parent = document.getElementById('countryName');
-  parent.innerHTML = name;
+  parent.innerHTML = countryData.name;
 }; // Insertion des données de missions dans le dom
 
 
 insertMissionData = function insertMissionData(missionData) {
-  console.log(missionData);
   var name = missionData.title;
   var description = missionData.description;
   var code = missionData.code_name;
@@ -2224,9 +2221,39 @@ insertMissionData = function insertMissionData(missionData) {
   var title = document.getElementById('missionName');
   var codeName = document.getElementById('codeName');
   var missionType = document.getElementById('missionType');
+  var missionDescription = document.getElementById('description');
   title.innerHTML = name;
   codeName.innerHTML = code;
   missionType.innerHTML = type;
+  missionDescription.innerHTML = description;
+}; // Gestion de création de cible au click 
+
+
+document.getElementById('addTarget').addEventListener('click', function (event) {
+  event.preventDefault();
+  var parent = document.getElementById('target');
+  var targets = targets == null ? getUser(2) : targets;
+}); //Récupération des données du pays
+
+getUser = function getUser(roleId) {
+  var speciality = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var mission = JSON.parse(document.getElementById('missionId').value);
+  var countryId = mission.country_id; // permet de gérer le cas particulier des agents
+
+  var url = speciality == null ? "/people/json/".concat(roleId, "/").concat(countryId, "/") : "/people/json/".concat(roleId, "/").concat(countryId, "/").concat(speciality);
+  return fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
+      "X-CSRF-TOKEN": "{{ csrf_token() }}"
+    },
+    method: "get"
+  }).then(function (response) {
+    return response.json();
+  }).then(function (data) {
+    return console.log(data);
+  });
 };
 
 /***/ }),

@@ -22,6 +22,11 @@
             <h3 class="italic text-slate-400" id="missionType"></h3>
             <p> Localisation : <span id="countryName"></span></p>
             <p> CodeName : <span id="codeName"></span></p>
+            <x-hr/>
+            <p id='description'></p>
+            <x-hr/>
+            <x-buttons.add href='#' id='addTarget'> add Target </x-button.add>
+            <div id='target'></div>
         </div>
     </div>
 @endsection

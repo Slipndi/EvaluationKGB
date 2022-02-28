@@ -1,6 +1,11 @@
 <?php
 
-use App\Http\Controllers\{CountryController, initiateMission, MissionController};
+use App\Http\Controllers\{
+    CountryController, 
+    initiateMission, 
+    MissionController,
+    PersonController
+};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +28,4 @@ Route::resource('missions', MissionController::class);
 
 //Routes pour requête AJAX avec response en Json
 Route::get('/country/json/{countryId}',[CountryController::class, 'getJson']);
+Route::get('/people/json/{roleId}/{countryId}/{specialityId?}',[PersonController::class, 'getJson']);

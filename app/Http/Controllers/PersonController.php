@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Person;
 use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonRequest;
+use Illuminate\Http\{JsonResponse, Request};
 
 class PersonController extends Controller
 {
@@ -82,5 +83,20 @@ class PersonController extends Controller
     public function destroy(Person $person)
     {
         //
+    }
+
+    public function getJson(
+        Request $request, 
+        int $countryId, 
+        int $roleId, 
+        int $specialityId = null
+    ) : JsonResponse {
+        print($roleId .' '.$specialityId);
+        return Response()
+            ->json(
+                Person::where('country_id', $countryId)
+                ->where('role_id', $roleId)
+                ->get()
+            );
     }
 }

@@ -5,11 +5,12 @@ getValue = function(){
     let display = document.getElementById('missionDisplay');
     let mission = JSON.parse(document.getElementById('missionId').value);
     let country = getCountry(mission.country_id);
+
     country.then((data) => {
-        console.log(data);
         createImage(data.code.toLowerCase());
         insertCountryData(data);
     });
+    
     insertMissionData(mission);
     display.hidden = false;
 
@@ -45,14 +46,12 @@ createImage = function (countryCode) {
 
 // Insertion des informations lié au pays dans le tableau
 insertCountryData = function (countryData) {
-    let name = countryData.name;
     let parent = document.getElementById('countryName');
-    parent.innerHTML = name;
+    parent.innerHTML = countryData.name;
 };
 
 // Insertion des données de missions dans le dom
 insertMissionData = function (missionData) {
-    console.log(missionData);
     let name = missionData.title;
     let description = missionData.description;
     let code = missionData.code_name;
@@ -61,8 +60,44 @@ insertMissionData = function (missionData) {
     let title = document.getElementById('missionName');
     let codeName = document.getElementById('codeName');
     let missionType = document.getElementById('missionType');
+    let missionDescription = document.getElementById('description');
 
     title.innerHTML = name;
     codeName.innerHTML = code;
     missionType.innerHTML = type;
+    missionDescription.innerHTML = description;
 }
+
+
+// Gestion de création de cible au click 
+
+document.getElementById('addTarget')
+    .addEventListener('click',
+        (event) => {
+            event.preventDefault();
+            let parent = document.getElementById('target');
+            let targets = targets == null ? getUser(2) : targets; 
+        }
+    );
+
+    //Récupération des données du pays
+getUser = function (roleId, speciality = null) {
+    let mission = JSON.parse(document.getElementById('missionId').value);
+    let countryId = mission.country_id;
+    // permet de gérer le cas particulier des agents
+    let url = speciality == null
+        ? `/people/json/${roleId}/${countryId}/`
+        : `/people/json/${roleId}/${countryId}/${speciality}`;
+    
+    return fetch(url, {
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        method: "get",
+    })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+};
