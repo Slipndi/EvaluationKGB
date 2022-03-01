@@ -22,6 +22,7 @@
                 <h3 class="italic text-slate-400" id="missionType"></h3>
                 <p> Localisation : <span id="countryName"></span></p>
                 <p> CodeName : <span id="codeName"></span></p>
+                <p> Speciality : <span id="speciality"></span></p>
                 <x-hr/>
                 <p id='description'></p>
                 <x-hr/>
