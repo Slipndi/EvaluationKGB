@@ -95,10 +95,11 @@ class PersonController extends Controller
             return Response()
             ->json(
                 Person::join('person_speciality', 'person_speciality.person_id','persons.id')
-                ->join('specialities', 'specialities.id', 'persons.id')
+                ->join('specialities', 'specialities.id', 'person_speciality.speciality_id')
                 ->where('country_id', '!=', $countryId)
                 ->where('role_id', $roleId)
                 ->where('specialities.id', $specialityId)
+                ->limit(5)
                 ->get()
             );
             }

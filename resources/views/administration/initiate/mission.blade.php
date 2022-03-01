@@ -54,6 +54,16 @@
                         <div id="agentParent"></div>         
                     </fieldset>
                 </div>
+                <x-hr />
+                <div>
+                    <fieldset>
+                        <div class='flex w-100 my-3'>
+                            <h3 id='titleHideout'>Select your hideout</h3> 
+                            <x-buttons.add href='/hideout/create' title='create hideout'/>
+                        </div>       
+                        <div id="hideoutParent"></div>         
+                    </fieldset>
+                </div>
             </div>
         </div>
     </form>
