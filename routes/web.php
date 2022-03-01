@@ -25,7 +25,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn() => view('index'));
 
 //Accès Administrateur
-Route::get('/initiate-mission',fn() => (new InitiateMissionController)->index());
+Route::get('/initiate-mission',[InitiateMissionController::class, 'index']);
+Route::post('/submitMission', [initiateMissionController::class, 'submit']);
 
 //Crud Mission 
 Route::resource('missions', MissionController::class);
@@ -36,3 +37,4 @@ Route::resource('hideouts', Hideout::class);
 Route::get('/country/json/{countryId}',[CountryController::class, 'getJson']);
 Route::get('/people/json/{roleId}/{countryId}/{specialityId?}',[PersonController::class, 'getJson']);
 Route::get('/hideout/json/{countryId}',[HideoutController::class, 'getJson']);
+

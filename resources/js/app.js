@@ -46,18 +46,20 @@ insertCountryData = function (countryData) {
 
 // Insertion des données de missions dans le dom
 insertMissionData = function (missionData) {
+    // je récupère les données de l'objet
     let name = missionData.title;
     let description = missionData.description;
     let code = missionData.code_name;
     let type = missionData.type;
     let speciality = missionData.speciality_name;
-        
+    // je récupère les éléments du dom
     let title = document.getElementById('missionName');
     let codeName = document.getElementById('codeName');
     let missionType = document.getElementById('missionType');
     let missionDescription = document.getElementById('description');
     let missionSpeciality = document.getElementById('speciality');
 
+    // j'injecte les données dynamiquement
     title.innerHTML = name;
     codeName.innerHTML = code;
     missionType.innerHTML = type;
@@ -66,16 +68,19 @@ insertMissionData = function (missionData) {
 }
 
 insertTargets = function () {
+    // Je récupère les cibles disponible dans le pays
     let targets = getUser(2);
+    // je récupère l'élèment qui va accueillir mes datas
     let targetParent = document.getElementById('target');
+    // je vide l'ensemble du contenu
     targetParent.innerHTML = '';
     let targetTitle = document.getElementById('titleTarget');
     // Je récupère la liste des cibles disponible dans le pays
     targets.then((targetAvailable) => {
     // Si aucune cible disponible j'informe l'administrateur
-        targetAvailable.length == 0 
-            ? targetTitle.innerHTML = 'No target available.'
-            : targetTitle.innerHTML = 'Select your target(s)';
+    targetTitle.innerHTML = targetAvailable.length == 0 
+            ? 'No target available.'
+            : 'Select your target(s)';
     // Pour toutes les cibles disponibles, je crée une checkbox
         targetAvailable.forEach(
             (target) => generateCheckboxes(target, 'targets', targetParent)
@@ -180,10 +185,10 @@ generateCheckboxes = function (person, inputName, parent) {
     let input = document.createElement('input');
     let label = document.createElement('label');
     // On les génère en fonction des données
-    input.name = inputName
+    input.name = `${inputName}[]`;
     input.type = 'checkbox';
     input.value = person.id;
-    input.id = person.id;
+    input.id = `${inputName}_${person.id}`;
     label.setAttribute("for", person.id);
     label.classList.add('ml-2', 'inline-block');
     label.innerHTML = person.code_name;
@@ -209,3 +214,40 @@ getHideout = function () {
         .then((response) => response.json())
         .then((data) => data);
 };
+
+validateForm = function (event) {
+    event.preventDefault();
+    let formulaire = document.getElementById('missionSub');
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    let agent, contact, target = false;
+    checkboxes.forEach((item) => {
+        if (item.id.startsWith('agents')) {
+            agent = true;
+        } 
+        if (item.id.startsWith('contacts')) {
+            contact = true
+        }
+        if (item.id.startsWith('targets')) {
+            target = true
+        }
+    });
+    if (agent === true && contact === true && target === true) {
+        formulaire.submit.call(formulaire);
+    } else {
+        let closeBtn = document.getElementById('closeBtn');
+        closeBtn.addEventListener(
+            'click',
+            () => document.getElementById('alertBox'
+        ).hidden = true);
+        document.getElementById('alertBox').hidden = false;
+        let alertContent = document.getElementById('alert');
+        alertContent.innerText = '';
+        alertContent.innerText +=  (agent != true ) ? ' Agent\r': '';
+        alertContent.innerText += (contact != true) ? ' Contact\r':'';
+        alertContent.innerText += (target != true)  ? ' Target\r':'';
+    }
+}
+
+let subButton = document.getElementById('initiate_mission');
+subButton.addEventListener('click', validateForm);
+

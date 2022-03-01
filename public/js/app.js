@@ -2203,16 +2203,19 @@ insertCountryData = function insertCountryData(countryData) {
 
 
 insertMissionData = function insertMissionData(missionData) {
+  // je récupère les données de l'objet
   var name = missionData.title;
   var description = missionData.description;
   var code = missionData.code_name;
   var type = missionData.type;
-  var speciality = missionData.speciality_name;
+  var speciality = missionData.speciality_name; // je récupère les éléments du dom
+
   var title = document.getElementById('missionName');
   var codeName = document.getElementById('codeName');
   var missionType = document.getElementById('missionType');
   var missionDescription = document.getElementById('description');
-  var missionSpeciality = document.getElementById('speciality');
+  var missionSpeciality = document.getElementById('speciality'); // j'injecte les données dynamiquement
+
   title.innerHTML = name;
   codeName.innerHTML = code;
   missionType.innerHTML = type;
@@ -2221,14 +2224,17 @@ insertMissionData = function insertMissionData(missionData) {
 };
 
 insertTargets = function insertTargets() {
-  var targets = getUser(2);
-  var targetParent = document.getElementById('target');
+  // Je récupère les cibles disponible dans le pays
+  var targets = getUser(2); // je récupère l'élèment qui va accueillir mes datas
+
+  var targetParent = document.getElementById('target'); // je vide l'ensemble du contenu
+
   targetParent.innerHTML = '';
   var targetTitle = document.getElementById('titleTarget'); // Je récupère la liste des cibles disponible dans le pays
 
   targets.then(function (targetAvailable) {
     // Si aucune cible disponible j'informe l'administrateur
-    targetAvailable.length == 0 ? targetTitle.innerHTML = 'No target available.' : targetTitle.innerHTML = 'Select your target(s)'; // Pour toutes les cibles disponibles, je crée une checkbox
+    targetTitle.innerHTML = targetAvailable.length == 0 ? 'No target available.' : 'Select your target(s)'; // Pour toutes les cibles disponibles, je crée une checkbox
 
     targetAvailable.forEach(function (target) {
       return generateCheckboxes(target, 'targets', targetParent);
@@ -2328,10 +2334,10 @@ generateCheckboxes = function generateCheckboxes(person, inputName, parent) {
   var input = document.createElement('input');
   var label = document.createElement('label'); // On les génère en fonction des données
 
-  input.name = inputName;
+  input.name = "".concat(inputName, "[]");
   input.type = 'checkbox';
   input.value = person.id;
-  input.id = person.id;
+  input.id = "".concat(inputName, "_").concat(person.id);
   label.setAttribute("for", person.id);
   label.classList.add('ml-2', 'inline-block');
   label.innerHTML = person.code_name;
@@ -2359,6 +2365,46 @@ getHideout = function getHideout() {
     return data;
   });
 };
+
+validateForm = function validateForm(event) {
+  event.preventDefault();
+  var formulaire = document.getElementById('missionSub');
+  var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+  var agent,
+      contact,
+      target = false;
+  checkboxes.forEach(function (item) {
+    if (item.id.startsWith('agents')) {
+      agent = true;
+    }
+
+    if (item.id.startsWith('contacts')) {
+      contact = true;
+    }
+
+    if (item.id.startsWith('targets')) {
+      target = true;
+    }
+  });
+
+  if (agent === true && contact === true && target === true) {
+    formulaire.submit.call(formulaire);
+  } else {
+    var closeBtn = document.getElementById('closeBtn');
+    closeBtn.addEventListener('click', function () {
+      return document.getElementById('alertBox').hidden = true;
+    });
+    document.getElementById('alertBox').hidden = false;
+    var alertContent = document.getElementById('alert');
+    alertContent.innerText = '';
+    alertContent.innerText += agent != true ? ' Agent\r' : '';
+    alertContent.innerText += contact != true ? ' Contact\r' : '';
+    alertContent.innerText += target != true ? ' Target\r' : '';
+  }
+};
+
+var subButton = document.getElementById('initiate_mission');
+subButton.addEventListener('click', validateForm);
 
 /***/ }),
 

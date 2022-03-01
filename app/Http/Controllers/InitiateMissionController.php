@@ -19,5 +19,8 @@ class InitiateMissionController extends Controller
             ->with(['missions' => $missions]);
     }
 
+    public function submit(Request $request) : void {
+        dd($request);
+    }
 
 }
