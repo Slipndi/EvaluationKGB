@@ -2177,6 +2177,7 @@ getValue = function getValue() {
   insertTargets();
   insertInformer();
   insertAgent(mission);
+  insertHideout();
   display.hidden = false;
 }; // Création du lien de l'image dynamiquement en fonction du choix de la mission
 
@@ -2206,18 +2207,21 @@ insertMissionData = function insertMissionData(missionData) {
   var description = missionData.description;
   var code = missionData.code_name;
   var type = missionData.type;
+  var speciality = missionData.speciality_name;
   var title = document.getElementById('missionName');
   var codeName = document.getElementById('codeName');
   var missionType = document.getElementById('missionType');
   var missionDescription = document.getElementById('description');
+  var missionSpeciality = document.getElementById('speciality');
   title.innerHTML = name;
   codeName.innerHTML = code;
   missionType.innerHTML = type;
   missionDescription.innerHTML = description;
+  missionSpeciality.innerHTML = speciality;
 };
 
 insertTargets = function insertTargets() {
-  var targets = targets == null ? getUser(2) : targets;
+  var targets = getUser(2);
   var targetParent = document.getElementById('target');
   targetParent.innerHTML = '';
   var targetTitle = document.getElementById('titleTarget'); // Je récupère la liste des cibles disponible dans le pays
@@ -2233,7 +2237,7 @@ insertTargets = function insertTargets() {
 };
 
 insertInformer = function insertInformer() {
-  var contacts = contacts == null ? getUser(3) : contacts;
+  var contacts = getUser(3);
   var contactParent = document.getElementById('contactParent');
   contactParent.innerHTML = '';
   var contactTitle = document.getElementById('titleContact'); // Je récupère la liste des cibles disponible dans le pays
@@ -2250,7 +2254,7 @@ insertInformer = function insertInformer() {
 
 insertAgent = function insertAgent(mission) {
   var specialityId = mission.speciality_id;
-  var agents = agents == null ? getUser(1, specialityId) : agents;
+  var agents = getUser(1, specialityId);
   var agentParent = document.getElementById('agentParent');
   agentParent.innerHTML = '';
   var titleAgent = document.getElementById('titleAgent'); // Je récupère la liste des cibles disponible dans le pays
@@ -2261,6 +2265,19 @@ insertAgent = function insertAgent(mission) {
 
     agentsAvailable.forEach(function (agent) {
       return generateCheckboxes(agent, 'agents', agentParent);
+    });
+  });
+};
+
+insertHideout = function insertHideout() {
+  var hideoutsAvailable = getHideout();
+  var titleHideout = document.getElementById('titleHideout');
+  var hideoutParent = document.getElementById('hideoutParent');
+  hideoutParent.innerHTML = '';
+  hideoutsAvailable.then(function (hideouts) {
+    titleHideout.innerHTML = hideouts.length == 0 ? 'No hideout available' : 'Select your hideout';
+    hideouts.forEach(function (hideout) {
+      return generateCheckboxes(hideout, 'hideouts', hideoutParent);
     });
   });
 }; //Récupération des données du pays
@@ -2315,7 +2332,6 @@ generateCheckboxes = function generateCheckboxes(person, inputName, parent) {
   input.type = 'checkbox';
   input.value = person.id;
   input.id = person.id;
-  input.required = true;
   label.setAttribute("for", person.id);
   label.classList.add('ml-2', 'inline-block');
   label.innerHTML = person.code_name;
@@ -2324,6 +2340,24 @@ generateCheckboxes = function generateCheckboxes(person, inputName, parent) {
   div.appendChild(label); // on injecte l'ensemble dans le dom
 
   parent.append(div);
+};
+
+getHideout = function getHideout() {
+  var mission = JSON.parse(document.getElementById('missionId').value);
+  var countryId = mission.country_id;
+  return fetch("/hideout/json/".concat(countryId, "/"), {
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
+      "X-CSRF-TOKEN": "{{ csrf_token() }}"
+    },
+    method: "get"
+  }).then(function (response) {
+    return response.json();
+  }).then(function (data) {
+    return data;
+  });
 };
 
 /***/ }),

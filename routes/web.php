@@ -3,7 +3,7 @@
 use App\Http\Controllers\{
     CountryController,
     HideoutController,
-    initiateMission, 
+    initiateMissionController, 
     MissionController,
     PersonController
 };
@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn() => view('index'));
 
 //Accès Administrateur
-Route::get('/initiate-mission',fn() => (new InitiateMission)->index());
+Route::get('/initiate-mission',fn() => (new InitiateMissionController)->index());
 
 //Crud Mission 
 Route::resource('missions', MissionController::class);

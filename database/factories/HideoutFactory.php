@@ -19,6 +19,7 @@ class HideoutFactory extends Factory
     public function definition()
     {
         return [
+            'code_name'=> $this->faker->jobTitle(),
             'address' => $this->faker->address(),
             'country_id' => Country::inRandomOrder()->first()->id,
             'type' => Arr::random(['Appartement', 'Maison', 'Garage'])

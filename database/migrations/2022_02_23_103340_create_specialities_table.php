@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('specialities', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('speciality_name');
             $table->timestamps();
         });
     }

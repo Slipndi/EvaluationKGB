@@ -15,6 +15,7 @@ getValue = function(){
     insertTargets();
     insertInformer();
     insertAgent(mission);
+    insertHideout();
 
 
     display.hidden = false;
@@ -49,20 +50,23 @@ insertMissionData = function (missionData) {
     let description = missionData.description;
     let code = missionData.code_name;
     let type = missionData.type;
-
+    let speciality = missionData.speciality_name;
+        
     let title = document.getElementById('missionName');
     let codeName = document.getElementById('codeName');
     let missionType = document.getElementById('missionType');
     let missionDescription = document.getElementById('description');
+    let missionSpeciality = document.getElementById('speciality');
 
     title.innerHTML = name;
     codeName.innerHTML = code;
     missionType.innerHTML = type;
     missionDescription.innerHTML = description;
+    missionSpeciality.innerHTML = speciality;
 }
 
 insertTargets = function () {
-    let targets = targets == null ? getUser(2) : targets;
+    let targets = getUser(2);
     let targetParent = document.getElementById('target');
     targetParent.innerHTML = '';
     let targetTitle = document.getElementById('titleTarget');
@@ -80,7 +84,7 @@ insertTargets = function () {
 }
 
 insertInformer = function () {
-    let contacts = contacts == null ? getUser(3) : contacts;
+    let contacts = getUser(3);
     let contactParent = document.getElementById('contactParent');
     contactParent.innerHTML = '';
     let contactTitle = document.getElementById('titleContact');
@@ -98,7 +102,7 @@ insertInformer = function () {
 }
 insertAgent = function (mission) {
     let specialityId = mission.speciality_id;
-    let agents = agents == null ? getUser(1, specialityId) : agents;
+    let agents = getUser(1, specialityId);
     let agentParent = document.getElementById('agentParent');
     agentParent.innerHTML = '';
     let titleAgent = document.getElementById('titleAgent');
@@ -115,6 +119,22 @@ insertAgent = function (mission) {
     });
 }
 
+insertHideout = function () {
+    let hideoutsAvailable = getHideout();
+    let titleHideout = document.getElementById('titleHideout');
+    let hideoutParent = document.getElementById('hideoutParent');
+    hideoutParent.innerHTML = '';
+    hideoutsAvailable.then((hideouts) => {
+        titleHideout.innerHTML =
+            hideouts.length == 0
+            ? 'No hideout available'
+            : 'Select your hideout';
+        hideouts.forEach(
+            (hideout) => generateCheckboxes(hideout, 'hideouts', hideoutParent)
+        );
+    });
+
+}
 
 //Récupération des données du pays
 getCountry  = function (id) {
@@ -164,7 +184,6 @@ generateCheckboxes = function (person, inputName, parent) {
     input.type = 'checkbox';
     input.value = person.id;
     input.id = person.id;
-    input.required = true;
     label.setAttribute("for", person.id);
     label.classList.add('ml-2', 'inline-block');
     label.innerHTML = person.code_name;
@@ -174,3 +193,19 @@ generateCheckboxes = function (person, inputName, parent) {
     // on injecte l'ensemble dans le dom
     parent.append(div);
 }
+
+getHideout = function () {
+    let mission = JSON.parse(document.getElementById('missionId').value);
+    let countryId = mission.country_id;
+    return fetch(`/hideout/json/${countryId}/`, {
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        method: "get",
+    })
+        .then((response) => response.json())
+        .then((data) => data);
+};

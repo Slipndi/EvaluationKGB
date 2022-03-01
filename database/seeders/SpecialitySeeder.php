@@ -15,11 +15,11 @@ class SpecialitySeeder extends Seeder
     public function run()
     {
         $specialities = collect([
-            ['title' => 'drive'],
-            ['title' => 'helicopter pilot'],
-            ['title' => 'guns'],
-            ['title' => 'picture shooter'],
-            ['title' => 'Polyglot'],
+            ['speciality_name' => 'drive'],
+            ['speciality_name' => 'helicopter pilot'],
+            ['speciality_name' => 'guns'],
+            ['speciality_name' => 'picture shooter'],
+            ['speciality_name' => 'Polyglot'],
         ]);
         $specialities->each(
             fn(array $speciality) => Speciality::create($speciality)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hideout;
 use App\Http\Requests\StoreHideoutRequest;
 use App\Http\Requests\UpdateHideoutRequest;
+use Illuminate\Http\{ JsonResponse, Request};
 
 class HideoutController extends Controller
 {
@@ -82,5 +83,13 @@ class HideoutController extends Controller
     public function destroy(Hideout $hideout)
     {
         //
+    }
+
+    public function getJson(Request $request, int $countryId) : JsonResponse {
+        return Response()
+            ->json(
+                Hideout::where('country_id', $countryId)
+                ->get()
+            );
     }
 }
