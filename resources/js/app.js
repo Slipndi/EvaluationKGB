@@ -5,8 +5,6 @@ getValue = function(){
     let display = document.getElementById('missionDisplay');
     let mission = JSON.parse(document.getElementById('missionId').value);
     let country = getCountry(mission.country_id);
-    
-    console.log(mission);
 
     country.then((data) => {
         createImage(data.code.toLowerCase());
