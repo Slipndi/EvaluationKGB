@@ -3,14 +3,24 @@
     <div class="w-100 flex mt-3 ml-3">
         <h2 class='mr-3 font-bold items-center justify-items-center'>Initiate a Mission</h2> <x-buttons.add href='/missions/create' title='create mission'/>
     </div>
+    @if(session('success'))
+        <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert" id="successBox">
+            <strong class="font-bold">Initialization succesfull</strong>
+            <p class="block sm:inline">{{ session('success') }}</p>
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3 " id='closeBtn'>
+                <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+            </span>
+        </div>
+    @endisset
     <form class='mt-3' action="/submitMission" method="POST" id="missionSub">
     @csrf 
     <div class="flex flex-col mx-2">
-        <label for='mission_id' class="block text-sm font-medium text-gray-700">
-        <select onchange="getValue()" id='missionId' name='mission_id' class=" mt-1 block w-full py-4 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        <label for='mission' class="block text-sm font-medium text-gray-700">
+        <select onchange="getValue()" id='missionId' name='mission' class=" mt-1 block w-full py-4 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             <option>Choose a mission</option>
-            @foreach($missions as $mission)
-                <option value='{{$mission}}'>{{ $mission->title }}</option>
+ 
+            @foreach($missions as $key=>$missionDetail)
+                <option value='{{$missionDetail}}'>{{ $missionDetail->title }}</option>
             @endforeach
         </select>
         </div>

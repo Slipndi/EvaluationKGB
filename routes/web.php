@@ -25,10 +25,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn() => view('index'));
 
 //Accès Administrateur
-Route::get('/initiate-mission',[InitiateMissionController::class, 'index']);
-Route::post('/submitMission', [initiateMissionController::class, 'submit']);
+Route::get('/initiate-mission',[InitiateMissionController::class, 'index'])->name('initiate-mission');
+Route::post('/submitMission', [initiateMissionController::class, 'store']);
+//Route::get('/submitMission', [initiateMissionController::class, 'store']);
 
-//Crud Mission 
+// CRUD
 Route::resource('missions', MissionController::class);
 Route::resource('persons', PersonController::class);
 Route::resource('hideouts', Hideout::class);

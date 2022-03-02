@@ -2169,6 +2169,7 @@ getValue = function getValue() {
   var display = document.getElementById('missionDisplay');
   var mission = JSON.parse(document.getElementById('missionId').value);
   var country = getCountry(mission.country_id);
+  console.log(mission);
   country.then(function (data) {
     createImage(data.code.toLowerCase());
     insertCountryData(data);

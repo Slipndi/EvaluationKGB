@@ -3,9 +3,6 @@
     <div>
         <div>
             <div>
-                <h2>Missions 2022</h2>
-            </div>
-            <div>
                 <a href="{{ route('missions.create') }}"> Ajouter une mission</a>
             </div>
         </div>
