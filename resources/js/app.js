@@ -250,3 +250,4 @@ validateForm = function (event) {
 let subButton = document.getElementById('initiate_mission');
 subButton.addEventListener('click', validateForm);
 
+

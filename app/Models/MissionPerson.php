@@ -10,27 +10,29 @@ class MissionPerson extends Model
 {
     use HasFactory;
 
+    protected $table = 'mission_person';
+
     protected $fillable = [
         'mission_id',
         'person_id'
     ];
 
     /**
-     * Crée le liens entre HIDEOUTS et MISSIONS
-     *
-     * @return BelongsTo
-     */
+    * Make relationship with Personn::class
+    *
+    * @return BelongsTo
+    */
     public function persons() : BelongsTo {
-        return $this->belongsTo(Hideout::class);
+        return $this->belongsTo(Person::class, 'person_id');
     }
     
     /**
-     * Crée le liens entre HIDEOUTS et MISSIONS
+     * Make relationship with Mission::class
      *
      * @return BelongsTo
      */
-    public function smissions() : BelongsTo {
-        return $this->belongsTo(Mission::class);
+    public function missions() : BelongsTo {
+        return $this->belongsTo(Mission::class, 'mission_id');
     }
 
 }

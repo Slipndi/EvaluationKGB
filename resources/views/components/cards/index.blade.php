@@ -13,8 +13,12 @@
             {{ $mission->title}}
         </h2>
         <h3 class="italic text-slate-400">{{ $mission->code_name }}</h3>
-        {# {{ $mission->statut->title }} #}
         <p>{{ $mission->description }}</p>
+        @foreach($mission->persons()->orderBy('role_id')->get() as $person)
+            @if($person->role_id == 2) Target : {{$person->code_name}} <br/> @endif
+            @if($person->role_id == 1) Agent : {{$person->code_name}} <br/> @endif
+            @if($person->role_id == 3) Contact : {{$person->code_name}}<br/> @endif
+        @endforeach
     </div>
     <div class='flex justify-end mt-4'>
         <form action="{{ route('missions.destroy',$mission->id) }}" method="POST">

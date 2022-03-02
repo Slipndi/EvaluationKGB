@@ -55,7 +55,7 @@ class Mission extends Model
      * @return hasMany
      */
     public function missionHideouts() : HasMany {
-        return $this->hasMany(MissionHideout::class);
+        return $this->hasMany(MissionHideout::class, 'mission_id');
     }
 
     /**
@@ -63,8 +63,8 @@ class Mission extends Model
      *
      * @return hasManys
      */
-    public function missionsPersons() : HasMany {
-        return $this->hasMany(MissionPerson::class);
+    public function missionPersons() : HasMany {
+        return $this->hasMany(MissionPerson::class, 'mission_id');
     }
 
     /**
