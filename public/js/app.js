@@ -2366,46 +2366,6 @@ getHideout = function getHideout() {
   });
 };
 
-validateForm = function validateForm(event) {
-  event.preventDefault();
-  var formulaire = document.getElementById('missionSub');
-  var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-  var agent,
-      contact,
-      target = false;
-  checkboxes.forEach(function (item) {
-    if (item.id.startsWith('agents')) {
-      agent = true;
-    }
-
-    if (item.id.startsWith('contacts')) {
-      contact = true;
-    }
-
-    if (item.id.startsWith('targets')) {
-      target = true;
-    }
-  });
-
-  if (agent === true && contact === true && target === true) {
-    formulaire.submit.call(formulaire);
-  } else {
-    var closeBtn = document.getElementById('closeBtn');
-    closeBtn.addEventListener('click', function () {
-      return document.getElementById('alertBox').hidden = true;
-    });
-    document.getElementById('alertBox').hidden = false;
-    var alertContent = document.getElementById('alert');
-    alertContent.innerText = '';
-    alertContent.innerText += agent != true ? ' Agent\r' : '';
-    alertContent.innerText += contact != true ? ' Contact\r' : '';
-    alertContent.innerText += target != true ? ' Target\r' : '';
-  }
-};
-
-var subButton = document.getElementById('initiate_mission');
-subButton.addEventListener('click', validateForm);
-
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

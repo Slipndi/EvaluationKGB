@@ -14,15 +14,8 @@
         </h2>
         <h3 class="italic text-slate-400">{{ $mission->code_name }}</h3>
         <p>{{ $mission->description }}</p>
-
     </div>
     <div class='flex justify-end mt-4'>
-        <form action="{{ route('missions.destroy',$mission->id) }}" method="POST">
-            <a class="btn btn-info" href="{{ route('missions.show',$mission->id) }}">Détails</a>
-            <a class="btn btn-primary" href="{{ route('missions.edit', $mission->id) }}">édition</a>
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger">Supprimer</button>
-        </form>
+        <a class="btn btn-info" href="{{ route('missions.show',$mission->id) }}">Détails</a>
     </div>
 </div>

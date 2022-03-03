@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //Accès utilisateurs standard
-Route::get('/', fn() => view('index'));
+Route::get('/', [MissionController::class, 'list'])->name('home');
 
 //Accès Administrateur
 Route::get('/initiate-mission',[InitiateMissionController::class, 'index'])->name('initiate-mission');

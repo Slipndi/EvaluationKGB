@@ -13,7 +13,7 @@
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
                             <a 
-                                href="#" 
+                                href="{{ route('home') }}"" 
                                 class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" 
                                 arria-current="page"
                             > 

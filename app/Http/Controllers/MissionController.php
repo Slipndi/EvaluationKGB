@@ -4,23 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Mission;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\{ RedirectResponse, Request };
+use Illuminate\Support\Facades\Http;
 
 class MissionController extends Controller
 {
     protected const ON_DUTY_STATUT_ID = 2;
-   /**
+    /**
     * Permet d'afficher la liste des missions en cours
     *
     * @return View
     */
     public function index() : View {
         $missions = Mission::latest()
-            ->where('statut_id', static::ON_DUTY_STATUT_ID)
-            ->paginate(6);
+            ->paginate(50);
 
         return view('missions.index', compact('missions'))
+            ->with('i', (request()->input('page', 1) - 1) * 50);
+    }
+    
+    public function list() : View {
+        $missions = Mission::latest()
+            ->where('statut_id', static::ON_DUTY_STATUT_ID)
+            ->paginate(6);
+        return view('missions.list', compact('missions'))
             ->with('i', (request()->input('page', 1) - 1) * 6);
     }
 

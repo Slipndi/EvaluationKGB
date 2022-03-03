@@ -100,7 +100,42 @@
             </div>
         </div>
     </form>
-    <script>
+<script>
+    validateForm = function (event) {
+    event.preventDefault();
+    let formulaire = document.getElementById('missionSub');
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    let agent, contact, target = false;
+    checkboxes.forEach((item) => {
+        if (item.id.startsWith('agents')) {
+            agent = true;
+        } 
+        if (item.id.startsWith('contacts')) {
+            contact = true
+        }
+        if (item.id.startsWith('targets')) {
+            target = true
+        }
+    });
+    if (agent === true && contact === true && target === true) {
+        formulaire.submit.call(formulaire);
+    } else {
+        let closeBtn = document.getElementById('closeBtn');
+        closeBtn.addEventListener(
+            'click',
+            () => document.getElementById('alertBox'
+        ).hidden = true);
+        document.getElementById('alertBox').hidden = false;
+        let alertContent = document.getElementById('alert');
+        alertContent.innerText = '';
+        alertContent.innerText +=  (agent != true ) ? ' Agent\r': '';
+        alertContent.innerText += (contact != true) ? ' Contact\r':'';
+        alertContent.innerText += (target != true)  ? ' Target\r':'';
+    }
+}
 
-    </script>
+let subButton = document.getElementById('initiate_mission');
+subButton.addEventListener('click', validateForm);
+
+</script>
 @endsection
