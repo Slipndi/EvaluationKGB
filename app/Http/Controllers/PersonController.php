@@ -94,7 +94,8 @@ class PersonController extends Controller
         if($roleId == 1 ) {
             return Response()
             ->json(
-                Person::join('person_speciality', 'person_speciality.person_id','persons.id')
+                Person::select('persons.*')
+                ->join('person_speciality', 'person_speciality.person_id','persons.id')
                 ->join('specialities', 'specialities.id', 'person_speciality.speciality_id')
                 ->where('country_id', '!=', $countryId)
                 ->where('role_id', $roleId)
