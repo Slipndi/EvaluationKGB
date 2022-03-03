@@ -50,3 +50,9 @@
     </div>
 </div>
 @endsection
+
+<!-- a faire 
+- affichage des hideouts à droites avec nom et adresse au dessus de la photo
+en dessous afficher les photos des personnes avec leur nom de code en dessous``
+laisser les noms complets dans le listing
+-->
