@@ -27,7 +27,7 @@ class Person extends Model
      * @return BelongsTo
      */
     public function country() : BelongsTo {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Country::class, 'country_id');
     }
 
     /**
@@ -36,7 +36,7 @@ class Person extends Model
      * @return boolean
      */
     public function role() : BelongsTo {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     /**

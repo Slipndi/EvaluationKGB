@@ -14,6 +14,7 @@ class MissionHideout extends Model
         'hideout_id',
         'mission_id'
     ];
+    protected $table = "hideout_mission";
 
     /**
      * Crée le liens entre HIDEOUTS et MISSIONS
@@ -21,7 +22,7 @@ class MissionHideout extends Model
      * @return BelongsTo
      */
     public function hideouts() : BelongsTo {
-        return $this->belongsTo(Hideout::class);
+        return $this->belongsTo(Hideout::class, 'hideout_id');
     }
     
     /**
@@ -30,7 +31,7 @@ class MissionHideout extends Model
      * @return BelongsTo
      */
     public function missions() : BelongsTo {
-        return $this->belongsTo(Mission::class);
+        return $this->belongsTo(Mission::class, 'mission_id');
     }
 
 }

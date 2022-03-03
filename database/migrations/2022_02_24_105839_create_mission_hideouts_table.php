@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('mission_hideouts', function (Blueprint $table) {
+        Schema::create('hideout_mission', function (Blueprint $table) {
             $table->id();
             $table->foreignId('hideout_id')->constrained();
             $table->foreignId('mission_id')->constrained();
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mission_hideouts');
+        Schema::dropIfExists('hideout_mission');
     }
 };

@@ -28,7 +28,7 @@ class Mission extends Model
      * @return BelongsTo
      */
     public function speciality() : BelongsTo {
-        return $this->belongsTo(Speciality::class);
+        return $this->belongsTo(Speciality::class, 'speciality_id');
     }
 
     /**
