@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\{
+    AdminController,
     CountryController,
     HideoutController,
     initiateMissionController, 
@@ -8,7 +9,6 @@ use App\Http\Controllers\{
     PersonController
 };
 use App\Models\Hideout;
-use App\Models\Person;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,19 +23,22 @@ use Illuminate\Support\Facades\Route;
 */
 //Accès utilisateurs standard
 Route::get('/', [MissionController::class, 'list'])->name('home');
+Route::get('/login',[AdminController::class, 'login'])->name('login');
+Route::get('/missions/show', [MissionController::class, 'show']);
 
-//Accès Administrateur
-Route::get('/initiate-mission',[InitiateMissionController::class, 'index'])->name('initiate-mission');
-Route::post('/submitMission', [initiateMissionController::class, 'store']);
-//Route::get('/submitMission', [initiateMissionController::class, 'store']);
 
-// CRUD
-Route::resource('missions', MissionController::class);
-Route::resource('persons', PersonController::class);
-Route::resource('hideouts', Hideout::class);
+Route::group(['middleware' => 'auth'], function () {
+    //Accès Administrateur
+    Route::get('/initiate-mission',[InitiateMissionController::class, 'index'])->name('initiate-mission');
+    Route::post('/submitMission', [initiateMissionController::class, 'store']);
+    // CRUD
+    Route::resource('missions', MissionController::class);
+    Route::resource('persons', PersonController::class);
+    Route::resource('hideouts', Hideout::class);
 
-//Routes pour requête AJAX avec response en Json
-Route::get('/country/json/{countryId}',[CountryController::class, 'getJson']);
-Route::get('/people/json/{roleId}/{countryId}/{specialityId?}',[PersonController::class, 'getJson']);
-Route::get('/hideout/json/{countryId}',[HideoutController::class, 'getJson']);
+    //Routes pour requête AJAX avec response en Json
+    Route::get('/country/json/{countryId}',[CountryController::class, 'getJson']);
+    Route::get('/people/json/{roleId}/{countryId}/{specialityId?}',[PersonController::class, 'getJson']);
+    Route::get('/hideout/json/{countryId}',[HideoutController::class, 'getJson']);
 
+});

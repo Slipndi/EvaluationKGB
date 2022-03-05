@@ -19,10 +19,13 @@
                             > 
                             Accueil
                             </a>
-                            <x-navigation.link href="/missions">Missions</x-menu-link>
-                            <x-navigation.link href="/persons">Personnes</x-menu-link>
-                            <x-navigation.link href="/hideouts">Planques</x-menu-link>
-                            <x-navigation.link href="/initiate-mission">Initier une mission</x-menu-link>
+                            <x-navigation.link href='/login'>Login</x-navigation.link>
+                        @auth
+                            <x-navigation.link href="/missions">Missions</x-navigation.link>
+                            <x-navigation.link href="/persons">Personnes</x-navigation.link>
+                            <x-navigation.link href="/hideouts">Planques</x-navigation.link>
+                            <x-navigation.link href="/initiate-mission">Initier une mission</x-navigation.link>
+                        @endauth
                         </div>
                     </div>
                 </div>
