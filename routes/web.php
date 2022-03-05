@@ -6,9 +6,10 @@ use App\Http\Controllers\{
     HideoutController,
     initiateMissionController, 
     MissionController,
-    PersonController
+    PersonController,
+    SpecialityController,
 };
-use App\Models\Hideout;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,15 +31,17 @@ Route::get('/login', fn()=>view('auth.login'))->name('login');
 Route::post('/login', [AdminController::class, 'checkAuth'])->name('checkAuth');
 
 
-
+// Routes reservés aux utilisateurs ayant un compte
 Route::group(['middleware' => 'auth'], function () {
     //Accès Administrateur
     Route::get('/initiate-mission',[InitiateMissionController::class, 'index'])->name('initiate-mission');
     Route::post('/submitMission', [initiateMissionController::class, 'store']);
+    
     // CRUD
     Route::resource('missions', MissionController::class, ['except' => ['show']]);
     Route::resource('persons', PersonController::class);
-    Route::resource('hideouts', Hideout::class);
+    Route::resource('hideouts', HideoutController::class);
+    Route::resource('specialities', SpecialityController::class);
 
     //Routes pour requête AJAX avec response en Json
     Route::get('/country/json/{countryId}',[CountryController::class, 'getJson']);
@@ -47,5 +50,5 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
     
-    Route::fallback(fn()=>route('home'));
+    Route::fallback(fn()=>redirect()->route('home'));
 });

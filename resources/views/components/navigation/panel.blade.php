@@ -26,6 +26,7 @@
                             <x-navigation.link href="/missions">Missions</x-navigation.link>
                             <x-navigation.link href="/persons">People</x-navigation.link>
                             <x-navigation.link href="/hideouts">Hideouts</x-navigation.link>
+                            <x-navigation.link href="/speciality">Specialities</x-navigation.link>
                             <x-navigation.link href="/initiate-mission">Initiate mission</x-navigation.link>
                             <x-navigation.link href="/logout">Logout</x-navigation.link>
                         @endauth

@@ -26,7 +26,7 @@ class AdminController extends Controller
         // Si l'utilisateur est reconnu dans la BDD
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return view('index');
+            return redirect()->route('home');
         }
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
@@ -36,7 +36,7 @@ class AdminController extends Controller
     public function logout(){
         Session::flush();
         Auth::logout();
-        return view('index');
+        return redirect()->route('home');
     }
 
 }

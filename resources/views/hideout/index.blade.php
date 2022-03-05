@@ -5,48 +5,34 @@
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table class="min-w-full divide-y divide-gray-200" id="peopleTable">
+            <table class="min-w-full divide-y divide-gray-200" id="hideoutsTable">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(0)"></th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(1)">Codename</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(2)">Fullname</th>
-                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(3)">nationality</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(4)">role</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(5)">birthdate</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(6)">specialities</th>
+                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(0)">id</th>
+                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(1)">Codename</th>
+                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(2)">Address</th>
+                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(3)">Country</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(4)">Type</th>
                         <th scope="col" class="relative px-6 py-3"><span class="sr-only">Edit</span></th>
                         <th scope="col" class="relative px-6 py-3"><span class="sr-only">delete</span></th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 text-sm">
-                    @foreach($people as $person)
+                    @foreach($hideouts as $hideout)
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap"> 
-                          <img 
-                            class="w-full h-10 object-cover rounded-full border-2 border-indigo-500" 
-                            src="{{$person->picture}}" 
-                            alt="{{strtolower($person->code_name)}}"
-                            title="{{strtolower($person->code_name)}}"  
-                        /></td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$person->code_name}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$person->first_name}} {{strtoupper($person->last_name)}}</td>
+                        <td class="px-3 py-4 whitespace-nowrap">{{$hideout->id}}</td>
+                        <td class="px-3 py-4 whitespace-nowrap">{{$hideout->code_name}}</td>
+                        <td class="px-3 py-4 whitespace-nowrap">{{$hideout->address}}</td>
                         <td class="px-3 py-4 whitespace-nowrap">
                         <img 
                             class="w-full h-10 object-cover rounded-full border-2 border-indigo-500" 
-                            src="https://flagcdn.com/{{strtolower($person->country->code)}}.svg" 
-                            alt="{{strtolower($person->country->name)}}" 
-                            title="{{strtolower($person->country->name)}}" 
+                            src="https://flagcdn.com/{{strtolower($hideout->country->code)}}.svg" 
+                            alt="{{strtolower($hideout->country->name)}}" 
+                            title="{{strtolower($hideout->country->name)}}" 
                         />
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$person->role()->first()->title}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$person->birthdate}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{$hideout->type}}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                        <ul>
-                          @foreach($person->specialities()->get() as $speciality)
-                            <li>{{$speciality->speciality_name}}</li>
-                          @endforeach
-                        </ul>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-blue-600">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -63,14 +49,14 @@
                 </tbody>
                 </table>
             </div>
-            <div class='mt-3'>{{ $people->render() }}</div>
+            <div class='mt-3'>{{ $hideouts->render() }}</div>
         </div>
     </div>
 </div>
 <script>
 function sortTable(n) {
     let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("peopleTable");
+    table = document.getElementById("hideoutsTable");
     switching = true;
   // Set the sorting direction to ascending:
     dir = "asc";

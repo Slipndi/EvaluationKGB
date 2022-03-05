@@ -47,6 +47,7 @@
                 class="w-60 h-60 object-cover rounded-full border-2 border-indigo-500" 
                 src="https://flagcdn.com/{{strtolower($mission->country->code)}}.svg" 
                 alt="{{strtolower($mission->country->name)}}" 
+                title="{{strtolower($mission->country->name)}}" 
             />
         </div>
     </div>

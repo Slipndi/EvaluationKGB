@@ -14,9 +14,10 @@ class HideoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        $hideouts = Hideout::latest()->paginate(50);
+        return view('hideout.index', compact('hideouts'))
+                ->with('i', (request()->input('page', 1) - 1) * 50);
     }
 
     /**
