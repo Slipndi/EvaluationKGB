@@ -23,8 +23,12 @@ use Illuminate\Support\Facades\Route;
 */
 //Accès utilisateurs standard
 Route::get('/', [MissionController::class, 'list'])->name('home');
-Route::get('/login',[AdminController::class, 'login'])->name('login');
-Route::get('/missions/show', [MissionController::class, 'show']);
+Route::get('/mission/{mission}', [MissionController::class, 'show'])->name('mission.show');
+
+// Authentification
+Route::get('/login', fn()=>view('auth.login'))->name('login');
+Route::post('/login', [AdminController::class, 'checkAuth'])->name('checkAuth');
+
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -32,7 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/initiate-mission',[InitiateMissionController::class, 'index'])->name('initiate-mission');
     Route::post('/submitMission', [initiateMissionController::class, 'store']);
     // CRUD
-    Route::resource('missions', MissionController::class);
+    Route::resource('missions', MissionController::class, ['except' => ['show']]);
     Route::resource('persons', PersonController::class);
     Route::resource('hideouts', Hideout::class);
 
@@ -41,4 +45,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/people/json/{roleId}/{countryId}/{specialityId?}',[PersonController::class, 'getJson']);
     Route::get('/hideout/json/{countryId}',[HideoutController::class, 'getJson']);
 
+    Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
+    
+    Route::fallback(fn()=>route('home'));
 });

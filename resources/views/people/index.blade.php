@@ -5,16 +5,16 @@
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table class="min-w-full divide-y divide-gray-200" id="missionTable">
+            <table class="min-w-full divide-y divide-gray-200" id="peopleTable">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(0)">id</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(1)">Title</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(2)">Description</th>
-                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(3)">country</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(4)">type</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(5)">Statut</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(6)">speciality</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(0)"></th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(1)">Codename</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(2)">Fullname</th>
+                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(3)">nationality</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(4)">role</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(5)">birthdate</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(6)">specialities</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(7)">start</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(8)">end</th>
                         <th scope="col" class="relative px-6 py-3"><span class="sr-only">Edit</span></th>
@@ -22,24 +22,30 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 text-sm">
-                    @foreach($missions as $mission)
+                    @foreach($people as $person)
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$mission->id}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{substr($mission->title, 0, 10)}}...</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{substr($mission->description, 0, 20) }}...</td>
+                        <td class="px-6 py-4 whitespace-nowrap"> 
+                          <img 
+                            class="w-full h-full object-cover rounded-full border-2 border-indigo-500" 
+                            src="{{$person->picture}}" 
+                            alt="{{strtolower($person->code_name)}}"
+                            title="{{strtolower($person->code_name)}}"  
+                        /></td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{$person->code_name}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{$person->first_name}} {{strtoupper($person->last_name)}}</td>
                         <td class="px-3 py-4 whitespace-nowrap">
                         <img 
-                            class="w-7 h-7 object-cover rounded-full border-2 border-indigo-500" 
-                            src="https://flagcdn.com/{{strtolower($mission->country->code)}}.svg" 
-                            alt="{{strtolower($mission->country->name)}}" 
-                            title="{{strtolower($mission->country->name)}}" 
+                            class="w-full h-10 object-cover rounded-full border-2 border-indigo-500" 
+                            src="https://flagcdn.com/{{strtolower($person->country->code)}}.svg" 
+                            alt="{{strtolower($person->country->name)}}" 
+                            title="{{strtolower($person->country->name)}}" 
                         />
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$mission->type}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$mission->statut->title}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$mission->speciality()->first()->speciality_name}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$mission->start_date}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$mission->end_date}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{$person->role()->first()->title}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{$person->birthdate}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap"></td>
+                        <td class="px-6 py-4 whitespace-nowrap"></td>
+                        <td class="px-6 py-4 whitespace-nowrap"></td>
                         <td class="px-6 py-4 whitespace-nowrap text-blue-600">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -55,14 +61,14 @@
                 </tbody>
                 </table>
             </div>
-            <div class='mt-3'>{{ $missions->render() }}</div>
+            <div class='mt-3'>{{ $people->render() }}</div>
         </div>
     </div>
 </div>
 <script>
 function sortTable(n) {
     let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("missionTable");
+    table = document.getElementById("peopleTable");
     switching = true;
   // Set the sorting direction to ascending:
     dir = "asc";

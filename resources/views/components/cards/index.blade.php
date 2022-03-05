@@ -16,6 +16,6 @@
         <p>{{ $mission->description }}</p>
     </div>
     <div class='flex justify-end mt-4'>
-        <a class="btn btn-info" href="{{ route('missions.show',$mission->id) }}">Détails</a>
+        <a class="btn btn-info" href="{{ route('mission.show',$mission->id) }}">Détails</a>
     </div>
 </div>

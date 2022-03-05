@@ -14,9 +14,11 @@ class PersonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        $people = Person::latest()->paginate(50);
+        
+        return view('people.index', compact('people'))
+                ->with('i', (request()->input('page', 1) - 1) * 50);
     }
 
     /**
@@ -84,7 +86,15 @@ class PersonController extends Controller
     {
         //
     }
-
+    /**
+     * Get data when an Ajax request is made
+     *
+     * @param  Request      $request
+     * @param  integer      $roleId
+     * @param  integer      $countryId
+     * @param  integer|null $specialityId
+     * @return JsonResponse
+     */
     public function getJson(
         Request $request, 
         int $roleId, 

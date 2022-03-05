@@ -38,7 +38,7 @@ class MissionController extends Controller
     public function create() : View {
         return view('missions.create');
     }
-
+    
     /**
      *  Vérification et insertion en base de donnée
      */
