@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Models\Mission;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\{ RedirectResponse, Request };
@@ -67,7 +68,8 @@ class MissionController extends Controller
      * Affichage du formulaire pour l'édition
      */
     public function edit(Mission $mission) : View {
-        return view('missions.edit', compact('mission'));
+        $countries = Country::all();
+        return view('missions.edit', compact('mission', 'countries'));
     }
 
     /**

@@ -12,6 +12,9 @@
             <span class="italic text-slate-400 text-xs">
                 {{$mission->country()->first()->name}}
             </span>
+            @auth
+                <a href="{{route('missions.edit', $mission)}}" class="text-sm underline" > Edit </a>
+            @endAuth
         </h1>
         <h2 class="italic text-slate-400">{{ $mission->code_name }}
             <span class="text-xs">
@@ -50,7 +53,11 @@
                 title="{{strtolower($mission->country->name)}}" 
             />
         </div>
+        <div class="flex justify-center items-center mt-3">
+            Action between {{$mission->start_date}} - {{$mission->end_date}}
+        </div>
     </div>
+
 </div>
 @endsection
 

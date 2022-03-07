@@ -1,56 +1,88 @@
 @extends('index')
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Edition de la mission</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('missions.index') }}"> Back</a>
-            </div>
-        </div>
-    </div>
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Houla</strong> Il y'a eu un problème avec votre saisie<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    <form action="{{ route('missions.update',$mission->id) }}" method="POST">
+    <form 
+        action="{{ route('missions.update', $mission) }}" 
+        method="POST" 
+        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+    >
         @csrf
         @method('PUT')
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <label for="title">Titre </label>
-                    <input type="text" 
-                        name="title" 
-                        value="{{ $mission->title }}" 
-                        class="form-control" 
-                        placeholder="title"
-                    >
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <label for="designation">Description</label>
-                    <textarea 
-                        class="form-control" 
-                        style="height:150px" 
-                        name="description" 
-                        placeholder="description"
-                    >
-                    {{ $mission->description }}
-                </textarea>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                <button type="submit" class="btn btn-primary">Envoyer</button>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="title"> Title</label>
+            <input 
+                class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id = "title" 
+                type = "text"
+                name = "title"
+                value = '{{ $mission->title }}'
+            >
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="code_name"> Codename</label>
+            <input 
+                class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id = "code_name" 
+                type = "text"
+                name = "code_name"
+                value = '{{ $mission->code_name }}'
+            >
+        </div>
+        <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="country"> Country</label>
+        <select 
+            id='country' 
+            name='country' 
+            class=" mt-1 block w-full py-4 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        >
+            @foreach($countries as $country)
+                <option value='{{$country->id}}' 
+                    @if($country->id == $mission->country_id) 
+                        selected 
+                    @endif
+                >
+                    {{$country->name}}
+                </option>
+            @endforeach
+        </select>
+        </div>        
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="type"> Type of Mission</label>
+            <input 
+                class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id = "type" 
+                type = "text"
+                name = "type"
+                value = '{{ $mission->type }}'
+            >
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="description"> Description</label>
+            <textarea 
+                class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id = "description" 
+                name = "description"
+                cols="33"
+                rows="4"
+            >{{ $mission->description}}</textarea>
+        </div>
+            <div>
+            <button 
+                type="button" 
+                class="
+                    bg-transparent 
+                    hover:bg-blue-500 
+                    hover:text-white
+                    text-blue-700 
+                    font-semibold 
+                    border 
+                    boder-blue-500
+                    py-2
+                    mx-2
+                    w-full
+                "
+                type="submit"
+            >Update</button>
             </div>
         </div>
     </form>
-@endsection
+@endsection    
