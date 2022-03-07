@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             StatutSeeder::class,
             MissionSeeder::class,
             PersonSeeder::class,
-            PersonSpecialitySeeder::class
+            PersonSpecialitySeeder::class,
+            UserSeeder::class
         ]);
     }
 }
