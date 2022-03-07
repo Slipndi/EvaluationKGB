@@ -21,8 +21,9 @@ class InitiateMissionController extends Controller
     public function index() : View {
         $missions = Mission::select('missions.*', 'specialities.speciality_name')
             ->where('statut_id', static::ON_PREPARE_STATUT)
-            ->join('specialities', 'specialities.id', 'missions.speciality_id')    
-            ->get();
+            ->join('specialities', 'specialities.id', 'missions.speciality_id')
+            ->get()
+            ->sortByDesc('id');
         return view('administration.initiate.mission')
             ->with(['missions' => $missions]);
     }

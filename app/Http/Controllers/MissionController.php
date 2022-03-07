@@ -62,7 +62,7 @@ class MissionController extends Controller
 
         Mission::create($request->all());
         return redirect()
-            ->route('missions.index')
+            ->route('initiate-mission')
             ->with('success','La mission a bien été crée');
     }
 
@@ -103,7 +103,7 @@ class MissionController extends Controller
 
         $mission->update($request->all());
         return redirect()
-            ->route('missions.index')
+            ->route('mission.index')
             ->with('success','La mission a bien été mise à jour');
     }
 

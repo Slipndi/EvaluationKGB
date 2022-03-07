@@ -2,6 +2,7 @@
 @section('content')
 <!-- This example requires Tailwind CSS v2.0+ -->
 <div class="flex flex-col mt-3">
+
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -17,7 +18,7 @@
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(6)">speciality</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(7)">start</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(8)">end</th>
-                        <th scope="col" class="relative px-6 py-3"><span class="sr-only">Edit</span></th>
+                        <th scope="col" class="relative px-6 py-3"><x-buttons.add href='/missions/create' title='create mission'/></th>
                         <th scope="col" class="relative px-6 py-3"><span class="sr-only">delete</span></th>
                     </tr>
                 </thead>

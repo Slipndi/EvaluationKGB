@@ -1,7 +1,6 @@
 @extends('index')
 @section('content')
     <x-error.handler />
-
     <form 
         action="{{ route('missions.store') }}" 
         method="POST" 

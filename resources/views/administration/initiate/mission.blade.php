@@ -18,7 +18,6 @@
         <label for='mission' class="block text-sm font-medium text-gray-700">
         <select onchange="getValue()" id='missionId' name='mission' class=" mt-1 block w-full py-4 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             <option>Choose a mission</option>
- 
             @foreach($missions as $key=>$missionDetail)
                 <option value='{{$missionDetail}}'>{{ $missionDetail->title }}</option>
             @endforeach
