@@ -1,45 +1,110 @@
 @extends('index')
 @section('content')
-<div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2>Add New mission</h2>
+    <form 
+        action="{{ route('missions.store', $mission) }}" 
+        method="POST" 
+        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+    >
+        @csrf
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="title"> Title</label>
+            <input 
+                class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id = "title" 
+                type = "text"
+                name = "title"
+            >
         </div>
-        <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('missions.index') }}"> Back</a>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="code_name">Codename</label>
+            <input 
+                class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id = "code_name" 
+                type = "text"
+                name = "code_name"
+            >
         </div>
-    </div>
-</div>
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Error!</strong> <br>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
+        <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="statut"> Statut</label>
+        <select 
+            id='statut' 
+            name='statut' 
+            class=" mt-1 block w-full py-4 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        >
+            @foreach($statuts as $statut)
+                <option value='{{$statut->id}}'>
+                    {{$statut->title}}
+                </option>
             @endforeach
-        </ul>
-    </div>
-@endif
-   
-<form action="{{ route('missions.store') }}" method="post">
-    @csrf
-  
-     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <label for="title"> Titre </label>
-                <input type="text" name="title" class="form-control" placeholder="title">
+        </select>
+        </div>
+        <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="speciality"> 
+            Speciality
+        </label>
+        <select 
+            id='speciality' 
+            name='speciality' 
+            class=" mt-1 block w-full py-4 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        >
+            @foreach($specialities as $speciality)
+                <option value='{{$speciality->id}}'>
+                    {{$speciality->speciality_name}}
+                </option>
+            @endforeach
+        </select>
+        </div>     
+        <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="country"> Country</label>
+        <select 
+            id='country' 
+            name='country' 
+            class=" mt-1 block w-full py-4 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        >
+            @foreach($countries as $country)
+                <option value='{{$country->id}}'>
+                    {{$country->name}}
+                </option>
+            @endforeach
+        </select>
+        </div>             
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="type"> Type of Mission</label>
+            <input 
+                class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id = "type" 
+                type = "text"
+                name = "type"
+            >
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="description"> Description</label>
+            <textarea 
+                class = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id = "description" 
+                name = "description"
+                cols="33"
+                rows="4"
+            ></textarea>
+        </div>
+            <div>
+            <button 
+                type="button" 
+                class="
+                    bg-transparent 
+                    hover:bg-blue-500 
+                    hover:text-white
+                    text-blue-700 
+                    font-semibold 
+                    border 
+                    boder-blue-500
+                    py-2
+                    mx-2
+                    w-full
+                "
+                type="submit"
+            >Create</button>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea class="form-control" style="height:150px" name="description" placeholder="Description"></textarea>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                <button type="submit" class="btn btn-primary">Envoyer</button>
-        </div>
-    </div>
-</form>
-@endsection
+    </form>
+@endsection    

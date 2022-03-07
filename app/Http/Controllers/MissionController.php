@@ -36,7 +36,10 @@ class MissionController extends Controller
      *
      */
     public function create() : View {
-        return view('missions.create');
+        $countries = Country::all();
+        $statuts = Statut::all();
+        $specialities = Speciality::all();
+        return view('missions.create', compact('countries', 'statuts', 'specialities'));
     }
     
     /**
