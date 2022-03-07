@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Country;
-use App\Models\Mission;
+use App\Models\{ Country, Mission, Speciality, Statut };
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\{ RedirectResponse, Request };
 use Illuminate\Support\Facades\Http;
@@ -69,7 +68,17 @@ class MissionController extends Controller
      */
     public function edit(Mission $mission) : View {
         $countries = Country::all();
-        return view('missions.edit', compact('mission', 'countries'));
+        $statuts = Statut::all();
+        $specialities = Speciality::all();
+        return view(
+            'missions.edit', 
+            compact(
+                'mission', 
+                'countries',
+                'statuts',
+                'specialities'
+            )
+        );
     }
 
     /**

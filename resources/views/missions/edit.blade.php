@@ -28,6 +28,44 @@
             >
         </div>
         <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="statut"> Statut</label>
+        <select 
+            id='statut' 
+            name='statut' 
+            class=" mt-1 block w-full py-4 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        >
+            @foreach($statuts as $statut)
+                <option value='{{$statut->id}}' 
+                    @if($statut->id == $mission->statut_id) 
+                        selected 
+                    @endif
+                >
+                    {{$statut->title}}
+                </option>
+            @endforeach
+        </select>
+        </div>
+        <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="speciality"> 
+            Speciality
+        </label>
+        <select 
+            id='speciality' 
+            name='speciality' 
+            class=" mt-1 block w-full py-4 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        >
+            @foreach($specialities as $speciality)
+                <option value='{{$speciality->id}}' 
+                    @if($speciality->id == $mission->speciality_id) 
+                        selected 
+                    @endif
+                >
+                    {{$speciality->speciality_name}}
+                </option>
+            @endforeach
+        </select>
+        </div>     
+        <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="country"> Country</label>
         <select 
             id='country' 
@@ -44,7 +82,7 @@
                 </option>
             @endforeach
         </select>
-        </div>        
+        </div>             
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="type"> Type of Mission</label>
             <input 
