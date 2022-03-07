@@ -57,7 +57,6 @@ class MissionController extends Controller
             'speciality_id' => 'required',
             'start_date' => 'required',
             'end_date' => 'required'
-
         ]);
 
         Mission::create($request->all());
@@ -99,11 +98,18 @@ class MissionController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'code_name' => 'required',
+            'country_id' => 'required',
+            'type' => 'required',
+            'statut_id' => 'required',
+            'speciality_id' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required'
         ]);
 
         $mission->update($request->all());
         return redirect()
-            ->route('mission.index')
+            ->route('missions.index')
             ->with('success','La mission a bien été mise à jour');
     }
 
