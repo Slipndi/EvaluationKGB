@@ -50,6 +50,14 @@ class MissionController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'code_name' => 'required',
+            'country_id' => 'required',
+            'type' => 'required',
+            'statut_id' => 'required',
+            'speciality_id' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required'
+
         ]);
 
         Mission::create($request->all());

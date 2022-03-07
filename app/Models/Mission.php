@@ -16,7 +16,7 @@ class Mission extends Model
         'code_name',
         'country_id',
         'type',
-        'mission_statut_id',
+        'statut_id',
         'speciality_id',
         'start_date',
         'end_date'

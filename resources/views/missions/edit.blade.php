@@ -1,5 +1,6 @@
 @extends('index')
 @section('content')
+    <x-error.handler />
     <form 
         action="{{ route('missions.update', $mission) }}" 
         method="POST" 
