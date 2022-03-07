@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('mission_person', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('person_id');
-            $table->foreignId('mission_id')->constrained();
+            $table->foreignId('mission_id')->constrained()->onDelete('cascade');
             $table->foreign('person_id')
                 ->references('id')
                 ->on('persons');

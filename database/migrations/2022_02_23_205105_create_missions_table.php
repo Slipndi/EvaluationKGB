@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('code_name');
-            $table->foreignId('country_id')->constrained();
+            $table->foreignId('country_id')->constrained()->onDelete('cascade');
             $table->string('type');
-            $table->foreignId('statut_id')->constrained();
-            $table->foreignId('speciality_id')->constrained();
+            $table->foreignId('statut_id')->constrained()->onDelete('cascade');
+            $table->foreignId('speciality_id')->constrained()->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();

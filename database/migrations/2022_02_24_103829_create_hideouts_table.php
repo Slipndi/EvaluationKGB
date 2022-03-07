@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('hideouts', function (Blueprint $table) {
             $table->id();
             $table->string('code_name');
-            $table->foreignId('country_id')->constrained();
+            $table->foreignId('country_id')->constrained()->onDelete('cascade');
             $table->string('address');
             $table->string('type');            
             $table->timestamps();

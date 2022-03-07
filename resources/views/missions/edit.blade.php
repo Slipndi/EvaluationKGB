@@ -10,7 +10,6 @@
             </div>
         </div>
     </div>
-   
     @if ($errors->any())
         <div class="alert alert-danger">
             <strong>Houla</strong> Il y'a eu un problème avec votre saisie<br><br>
@@ -21,12 +20,10 @@
             </ul>
         </div>
     @endif
-  
     <form action="{{ route('missions.update',$mission->id) }}" method="POST">
         @csrf
         @method('PUT')
-   
-         <div class="row">
+        <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <label for="title">Titre </label>
@@ -52,9 +49,8 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-              <button type="submit" class="btn btn-primary">Envoyer</button>
+                <button type="submit" class="btn btn-primary">Envoyer</button>
             </div>
         </div>
-   
     </form>
 @endsection

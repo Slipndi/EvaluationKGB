@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('person_id')
             ->references('id')
             ->on('persons');
-            $table->foreignId('speciality_id')->constrained();
+            $table->foreignId('speciality_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

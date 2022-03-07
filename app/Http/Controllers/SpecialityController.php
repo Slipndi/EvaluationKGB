@@ -13,9 +13,10 @@ class SpecialityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        $specialities = Speciality::latest()->paginate(50);
+        return view('specialities.index', compact('specialities'))
+                ->with('i', (request()->input('page', 1) - 1) * 50);
     }
 
     /**

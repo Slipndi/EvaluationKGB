@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('hideout_mission', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('hideout_id')->constrained();
-            $table->foreignId('mission_id')->constrained();
+            $table->foreignId('hideout_id')->constrained()->onDelete('cascade');
+            $table->foreignId('mission_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
