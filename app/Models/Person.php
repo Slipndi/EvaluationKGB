@@ -16,6 +16,7 @@ class Person extends Model
         'last_name',
         'birthdate',
         'code_name',
+        'picture',
         'role_id',
     ];
 

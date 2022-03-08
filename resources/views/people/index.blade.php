@@ -1,6 +1,5 @@
 @extends('index')
 @section('content')
-<!-- This example requires Tailwind CSS v2.0+ -->
 <div class="flex flex-col mt-3">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -15,8 +14,8 @@
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(4)">role</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(5)">birthdate</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(6)">specialities</th>
-                        <th scope="col" class="relative px-6 py-3"><span class="sr-only">Edit</span></th>
-                        <th scope="col" class="relative px-6 py-3"><span class="sr-only">delete</span></th>
+                        <th scope="col" class="relative px-6 py-3"><x-buttons.add href='/persons/create' title='create person'/></th>
+                        <th scope="col" class="relative px-6 py-3"></th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 text-sm">

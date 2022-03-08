@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Person;
-use App\Http\Requests\StorePersonRequest;
-use App\Http\Requests\UpdatePersonRequest;
-use Illuminate\Http\{JsonResponse, Request};
+use App\Models\{Country, Person, Role, Speciality};
+use Illuminate\Http\{JsonResponse, RedirectResponse, Request};
+use Illuminate\Support\Facades\Http;
 
 class PersonController extends Controller
 {
@@ -21,26 +20,38 @@ class PersonController extends Controller
                 ->with('i', (request()->input('page', 1) - 1) * 50);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+        $countries = Country::all();
+        $specialities = Speciality::all();
+        $roles = Role::all();
+        $response = Http::get('https://randomuser.me/api/')->collect('results');
+        $picture = $response[0]['picture']['medium'];
+        return view('people.create', compact(
+            'picture', 
+            'countries', 
+            'specialities',
+            'roles'
+        ));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StorePersonRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StorePersonRequest $request)
-    {
-        //
-    }
+    public function store(Request $request) : RedirectResponse {        
+        $request->validate([
+            'code_name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'country_id' => 'required',
+            'role_id' => 'required',
+            'picture' => 'required',
+            'birthdate' => 'required',
+        ]);
+
+    Person::create($request->all());
+    return redirect()
+        ->route('persons.index')
+        ->with('success','your person has been create');
+}
 
     /**
      * Display the specified resource.
