@@ -47,6 +47,8 @@
         <x-form.textarea name="description" title="Description">
             {{$mission->description}}
         </x-form.textarea>
+        <x-form.input name='start_date' title='Start date' type='date' value="{{$mission->start_date}}"/>
+        <x-form.input name='end_date' title='End date' type='date' value="{{$mission->end_date}}"/>
         <x-form.submit>Update</x-form.submit>
     </form>
 @endsection    
