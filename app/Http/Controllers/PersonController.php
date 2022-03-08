@@ -114,8 +114,8 @@ class PersonController extends Controller
         );
     }
 
-    public function update(Request $request, Person $person)
-    {
+    public function update(Request $request, Person $person) : RedirectResponse {
+        
         $request->validate([
             'code_name' => 'required',
             'first_name' => 'required',
@@ -127,15 +127,29 @@ class PersonController extends Controller
         ]);
         // Création du personnage
         $person->update($request->all());
+
         // Si agent on rajoute les spécialités
         if($request->role_id == static::AGENT_ID){
             $request->validate([
                 'speciality_id' => 'required'
             ]);
+            //on vide les enregistrements existants
+            PersonSpeciality::where('person_id', $person->id)
+                ->delete('speciality_id');
+            
+            //on insère les nouveaux choix
+            collect($request->speciality_id)->each(
+                function(int $id) use ($person) : void {
+                    PersonSpeciality::create([
+                        'speciality_id' => $id,
+                        'person_id' => $person->id
+                    ]);
+                }
+            );
         }
         return redirect()
             ->route('persons.index')
-            ->with('success','Person as been updated');
+            ->with('success', $person->code_name.' updated');
     }
 
     /**
@@ -146,7 +160,12 @@ class PersonController extends Controller
      */
     public function destroy(Person $person)
     {
-        //
+        $codeName = $person->code_name;
+        $person->delete();
+
+        return redirect()
+            ->route('persons.index')
+            ->with('success', $codeName.' delete');
     }
     /**
      * Get data when an Ajax request is made
