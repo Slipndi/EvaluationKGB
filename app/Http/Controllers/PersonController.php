@@ -2,27 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Country, Person, Role, Speciality};
+use App\Models\{Country, Person, PersonSpeciality, Role, Speciality};
 use Illuminate\Http\{JsonResponse, RedirectResponse, Request};
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
+use Illuminate\View\View;
 
 class PersonController extends Controller
 {
+    protected const AGENT_ID = 1;
     /**
-     * Display a listing of the resource.
+     * List of people
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index() {
+    public function index() : View {
         $people = Person::latest()->paginate(50);
-        
         return view('people.index', compact('people'))
                 ->with('i', (request()->input('page', 1) - 1) * 50);
     }
 
-
-    public function create()
-    {
+    /**
+     * Create people with specialities and country
+     *
+     * @return View
+     */
+    public function create() : View {
         $countries = Country::all();
         $specialities = Speciality::all();
         $roles = Role::all();
@@ -36,6 +41,12 @@ class PersonController extends Controller
         ));
     }
 
+    /**
+     * Stocker les résultats dans la base de donnée
+     *
+     * @param  Request          $request
+     * @return RedirectResponse
+     */
     public function store(Request $request) : RedirectResponse {        
         $request->validate([
             'code_name' => 'required',
@@ -46,8 +57,20 @@ class PersonController extends Controller
             'picture' => 'required',
             'birthdate' => 'required',
         ]);
-
-    Person::create($request->all());
+        // Création du personnage
+        $person = Person::create($request->all());
+        // Si agent on rajoute les spécialités
+        if($request->role_id == static::AGENT_ID){
+            $request->validate([
+                'speciality_id' => 'required'
+            ]);
+            $specialities = collect($request->speciality_id);
+            $specialities->each(fn(int $speciality_id) => PersonSpeciality::create([
+                'speciality_id'=>$speciality_id,
+                'person_id'=>$person->id
+            ]));
+        }
+    
     return redirect()
         ->route('persons.index')
         ->with('success','your person has been create');
@@ -65,26 +88,54 @@ class PersonController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Display page for edition of person
      *
-     * @param  \App\Models\Person  $person
-     * @return \Illuminate\Http\Response
+     * @param  Person $person
+     * @return View
      */
-    public function edit(Person $person)
-    {
-        //
+    public function edit(Person $person) : View {
+        $countries = Country::all();
+        $specialities = Speciality::all();
+        $roles = Role::all();
+        $personSpeciality = PersonSpeciality::where('person_id', $person->id)
+            ->get('speciality_id')
+            ->toArray();
+        $personSpeciality = Arr::flatten($personSpeciality);
+        
+        return view(
+            'people.edit', 
+            compact(
+                'person', 
+                'countries',
+                'specialities',
+                'roles',
+                'personSpeciality'
+            )
+        );
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdatePersonRequest  $request
-     * @param  \App\Models\Person  $person
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdatePersonRequest $request, Person $person)
+    public function update(Request $request, Person $person)
     {
-        //
+        $request->validate([
+            'code_name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'country_id' => 'required',
+            'role_id' => 'required',
+            'picture' => 'required',
+            'birthdate' => 'required',
+        ]);
+        // Création du personnage
+        $person->update($request->all());
+        // Si agent on rajoute les spécialités
+        if($request->role_id == static::AGENT_ID){
+            $request->validate([
+                'speciality_id' => 'required'
+            ]);
+        }
+        return redirect()
+            ->route('persons.index')
+            ->with('success','Person as been updated');
     }
 
     /**
