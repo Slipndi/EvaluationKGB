@@ -4,7 +4,7 @@ use App\Http\Controllers\{
     AdminController,
     CountryController,
     HideoutController,
-    initiateMissionController, 
+    InitiateMissionController, 
     MissionController,
     PersonController,
     SpecialityController,
