@@ -24,7 +24,6 @@
                     @foreach($people as $person)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap"> 
-                          <a class="btn btn-info" href="{{ route('people.show', $person) }}">Détails</a>
                           <img 
                             class="w-full h-10 object-cover rounded-full border-2 border-indigo-500" 
                             src="{{$person->picture}}" 
