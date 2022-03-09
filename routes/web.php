@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
     
     // CRUD
     Route::resource('missions', MissionController::class, ['except' => ['show']]);
-    Route::resource('persons', PersonController::class);
+    Route::resource('people', PersonController::class);
     Route::resource('hideouts', HideoutController::class);
     Route::resource('specialities', SpecialityController::class);
 

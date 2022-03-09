@@ -72,19 +72,12 @@ class PersonController extends Controller
         }
     
     return redirect()
-        ->route('persons.index')
+        ->route('people.index')
         ->with('success','your person has been create');
 }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Person  $person
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Person $person)
-    {
-        //
+    public function show(Person $person) : View {
+        return View('people.view', compact('person'));
     }
 
     /**
@@ -148,7 +141,7 @@ class PersonController extends Controller
             );
         }
         return redirect()
-            ->route('persons.index')
+            ->route('people.index')
             ->with('success', $person->code_name.' updated');
     }
 

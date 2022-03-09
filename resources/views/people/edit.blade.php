@@ -2,7 +2,7 @@
 @section('content')
 <x-error.handler />
     <form 
-        action="{{ route('persons.update', $person) }}" 
+        action="{{ route('people.update', $person) }}" 
         method="POST" 
         class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
     >
