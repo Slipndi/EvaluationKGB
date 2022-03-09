@@ -13,7 +13,8 @@ class Hideout extends Model
     protected $fillable = [
         'address', 
         'country_id',
-        'type'
+        'type',
+        'code_name',
     ];
 
     /**

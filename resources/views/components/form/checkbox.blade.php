@@ -1,4 +1,4 @@
-@props(['name', 'title', 'value', 'check'])
+@props(['name', 'title', 'value', 'check'=>'false'])
 
 <div class='flex items-center'>
     @if($check == 'false')

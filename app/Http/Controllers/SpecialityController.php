@@ -3,85 +3,55 @@
 namespace App\Http\Controllers;
 
 use App\Models\Speciality;
-use App\Http\Requests\StoreSpecialityRequest;
-use App\Http\Requests\UpdateSpecialityRequest;
+use Illuminate\Http\{ RedirectResponse, Request};
+use Illuminate\View\View;
 
 class SpecialityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index() {
         $specialities = Speciality::latest()->paginate(50);
         return view('specialities.index', compact('specialities'))
                 ->with('i', (request()->input('page', 1) - 1) * 50);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
+    public function create() : View {
+        return view('specialities.create');
+    }
+
+    public function store(Request $request) : RedirectResponse {
+        $request->validate([
+            'speciality_name' => 'required|unique:Specialities,speciality_name'
+        ]);
+        Speciality::create($request->all());
+        return redirect()
+            ->route('specialities.index')
+            ->with('success', $request->speciality_name. ' successfully create.');
+    }
+
+    public function show(Speciality $speciality) {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreSpecialityRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreSpecialityRequest $request)
-    {
-        //
+    public function edit(Speciality $speciality) {
+        return view('specialities.edit', compact('speciality')); 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Speciality  $speciality
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Speciality $speciality)
-    {
-        //
+    public function update(Request $request, Speciality $speciality) : RedirectResponse {
+        $request->validate([
+            'speciality_name' => 'required|unique:Specialities,speciality_name'
+        ]);
+        $speciality->update($request->all());
+        return redirect()
+            ->route('specialities.index')
+            ->with('success', $request->speciality_name. ' successfully update.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Speciality  $speciality
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Speciality $speciality)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateSpecialityRequest  $request
-     * @param  \App\Models\Speciality  $speciality
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateSpecialityRequest $request, Speciality $speciality)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Speciality  $speciality
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Speciality $speciality)
     {
-        //
+        $speciality->delete();
+        return redirect()
+            ->route('specialities.index')
+            ->with('success', $speciality->speciality_name. ' successfully delete.');
     }
 }

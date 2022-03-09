@@ -2,90 +2,106 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Hideout;
-use App\Http\Requests\StoreHideoutRequest;
-use App\Http\Requests\UpdateHideoutRequest;
-use Illuminate\Http\{ JsonResponse, Request};
+use App\Models\{ Hideout, Country };
+use Illuminate\Http\{ JsonResponse, RedirectResponse, Request};
+use Illuminate\View\View;
 
 class HideoutController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display list of hideouts
      *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function index() {
+    public function index() : View {
         $hideouts = Hideout::latest()->paginate(50);
         return view('hideout.index', compact('hideouts'))
                 ->with('i', (request()->input('page', 1) - 1) * 50);
     }
+    /**
+     * Display create form with countries
+     *
+     * @return View
+     */
+    public function create() : View {
+        $countries = Country::all();
+        return view('hideout.create', compact('countries'));
+    }
 
     /**
-     * Show the form for creating a new resource.
+     * Store information after verification
      *
-     * @return \Illuminate\Http\Response
+     * @param  Request          $request
+     * @return RedirectResponse
      */
-    public function create()
-    {
+    public function store(Request $request) : RedirectResponse {
+        $request->validate([
+            'code_name'=>'required',
+            'country_id'=>'required',
+            'address'=>'required',
+            'type'=>'required'
+        ]);
+        Hideout::create($request->all());
+        return redirect()
+            ->route('hideouts.index')
+            ->with('success', $request->code_name . 'creation successfull');
+    }
+
+    public function show(Hideout $hideout) {
         //
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Display Edit form with values
      *
-     * @param  \App\Http\Requests\StoreHideoutRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  Hideout $hideout
+     * @return View
      */
-    public function store(StoreHideoutRequest $request)
-    {
-        //
+    public function edit(Hideout $hideout) : View {
+        $countries = Country::all();
+        return view('hideout.edit', compact('countries', 'hideout'));
     }
 
     /**
-     * Display the specified resource.
+     * Update hideout data from form
      *
-     * @param  \App\Models\Hideout  $hideout
-     * @return \Illuminate\Http\Response
+     * @param  Request $request
+     * @param  Hideout $hideout
+     * @return void
      */
-    public function show(Hideout $hideout)
-    {
-        //
+    public function update(Request $request, Hideout $hideout) : RedirectResponse {
+        $request->validate([
+            'code_name'=>'required',
+            'country_id'=>'required',
+            'address'=>'required',
+            'type'=>'required'
+        ]);
+        $hideout->update($request->all());
+        return redirect()
+            ->route('hideouts.index')
+            ->with('success', $request->code_name. ' is update');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Delete hideout 
      *
-     * @param  \App\Models\Hideout  $hideout
-     * @return \Illuminate\Http\Response
+     * @param  Hideout $hideout
+     * @return RedirectResonse
      */
-    public function edit(Hideout $hideout)
-    {
-        //
+    public function destroy(Hideout $hideout) : RedirectResponse {
+        $hideout->delete();
+        return redirect()
+            ->route('hideouts.index')
+            ->with('success', $hideout->code_name . ' is delete');
     }
 
     /**
-     * Update the specified resource in storage.
+     * Get JSON data for Misson initiation
      *
-     * @param  \App\Http\Requests\UpdateHideoutRequest  $request
-     * @param  \App\Models\Hideout  $hideout
-     * @return \Illuminate\Http\Response
+     * @param  Request      $request
+     * @param  integer      $countryId
+     * @return JsonResponse
      */
-    public function update(UpdateHideoutRequest $request, Hideout $hideout)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Hideout  $hideout
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Hideout $hideout)
-    {
-        //
-    }
-
     public function getJson(Request $request, int $countryId) : JsonResponse {
         return Response()
             ->json(

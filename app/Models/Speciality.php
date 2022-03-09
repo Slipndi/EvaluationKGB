@@ -11,7 +11,7 @@ class Speciality extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title'
+        'speciality_name'
     ];
 
     /**
