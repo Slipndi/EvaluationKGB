@@ -4,7 +4,7 @@ use App\Http\Controllers\{
     AdminController,
     CountryController,
     HideoutController,
-    initiateMissionController, 
+    InitiateMissionController, 
     MissionController,
     PersonController,
     SpecialityController,
@@ -35,7 +35,7 @@ Route::post('/login', [AdminController::class, 'checkAuth'])->name('checkAuth');
 Route::group(['middleware' => 'auth'], function () {
     //Accès Administrateur
     Route::get('/initiate-mission',[InitiateMissionController::class, 'index'])->name('initiate-mission');
-    Route::post('/submitMission', [initiateMissionController::class, 'store']);
+    Route::post('/submitMission', [InitiateMissionController::class, 'store']);
     
     // CRUD
     Route::resource('missions', MissionController::class, ['except' => ['show']]);

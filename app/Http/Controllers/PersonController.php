@@ -157,7 +157,7 @@ class PersonController extends Controller
         $person->delete();
 
         return redirect()
-            ->route('persons.index')
+            ->route('people.index')
             ->with('success', $codeName.' delete');
     }
     /**

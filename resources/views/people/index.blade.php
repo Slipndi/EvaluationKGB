@@ -16,7 +16,7 @@
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(4)">role</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(5)">birthdate</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(6)">specialities</th>
-                        <th scope="col" class="relative px-6 py-3"><x-buttons.add href='/persons/create' title='create person'/></th>
+                        <th scope="col" class="relative px-6 py-3"><x-buttons.add href='/people/create' title='create person'/></th>
                         <th scope="col" class="relative px-6 py-3"></th>
                     </tr>
                 </thead>
@@ -24,7 +24,6 @@
                     @foreach($people as $person)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap"> 
-                          <a class="btn btn-info" href="{{ route('people.show', $person) }}">Détails</a>
                           <img 
                             class="w-full h-10 object-cover rounded-full border-2 border-indigo-500" 
                             src="{{$person->picture}}" 
